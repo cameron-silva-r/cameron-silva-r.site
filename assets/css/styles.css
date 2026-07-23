@@ -160,6 +160,10 @@ main .small-note {
   gap: 1rem;
 }
 
+.home-overview.single-panel {
+  grid-template-columns: 1fr;
+}
+
 .overview-panel h2 {
   margin-bottom: 0.7rem;
   font-size: 1.3rem;

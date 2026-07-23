@@ -464,18 +464,6 @@ h1 {
   text-align: left;
 }
 
-.article-prose p:not(.lead)::first-letter {
-  float: left;
-  font-family: "Fraunces", serif;
-  font-size: 2.15rem;
-  line-height: 0.95;
-  padding-right: 0.2rem;
-  padding-top: 0.08rem;
-  font-weight: 700;
-  color: var(--accent-dark);
-  letter-spacing: 0.01em;
-}
-
 .article-meta-row {
   display: flex;
   justify-content: space-between;

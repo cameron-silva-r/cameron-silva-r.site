@@ -33,24 +33,44 @@
       <p class="lead">Une selection de projets orientee impact, avec methodes, donnees et resultats actionnables.</p>
     </div>
 
-    <div class="container cards-grid">
-      <article class="panel project-card">
-        <h2>Forecast Offre Chauffeurs 2035-2040</h2>
-        <p>Projection multi-scenarios de l'offre de chauffeurs routiers avec hypotheses demographiques, emploi et attractivite metier.</p>
-        <p class="muted">Methods: time-series, scenario analysis, uncertainty bands</p>
-      </article>
+    <div class="container">
+      <div class="project-filters" role="group" aria-label="Filtrer les projets">
+        <button class="filter-btn active" type="button" data-filter="all">Tous</button>
+        <button class="filter-btn" type="button" data-filter="en-cours">En cours</button>
+        <button class="filter-btn" type="button" data-filter="termine">Terminés</button>
+      </div>
 
-      <article class="panel project-card">
-        <h2>Criticite Corridors Europeens</h2>
-        <p>Evaluation de la vulnerabilite des corridors avec approche baseline vs stress pour anticiper les points de rupture logistique.</p>
-        <p class="muted">Methods: resilience scoring, flow concentration, sensitivity tests</p>
-      </article>
+      <div class="project-list">
+        <article class="panel project-row" data-status="en-cours">
+          <div class="project-meta">
+            <span class="status-pill status-live">En cours</span>
+            <span class="muted">2025 - 2026</span>
+          </div>
+          <h2>Forecast Offre Chauffeurs 2035-2040</h2>
+          <p>Projection multi-scenarios de l'offre de chauffeurs routiers avec hypotheses demographiques, emploi et attractivite metier.</p>
+          <p class="muted">Methods: time-series, scenario analysis, uncertainty bands</p>
+        </article>
 
-      <article class="panel project-card">
-        <h2>Penurie TRM - Econometrie</h2>
-        <p>Identification des determinants structurels de la penurie (age, salaires relatifs, conjoncture, tension metier).</p>
-        <p class="muted">Methods: panel models, robustness checks, policy interpretation</p>
-      </article>
+        <article class="panel project-row" data-status="en-cours">
+          <div class="project-meta">
+            <span class="status-pill status-live">En cours</span>
+            <span class="muted">2025 - 2026</span>
+          </div>
+          <h2>Criticite Corridors Europeens</h2>
+          <p>Evaluation de la vulnerabilite des corridors avec approche baseline vs stress pour anticiper les points de rupture logistique.</p>
+          <p class="muted">Methods: resilience scoring, flow concentration, sensitivity tests</p>
+        </article>
+
+        <article class="panel project-row" data-status="termine">
+          <div class="project-meta">
+            <span class="status-pill">Terminé</span>
+            <span class="muted">2024 - 2025</span>
+          </div>
+          <h2>Penurie TRM - Econometrie</h2>
+          <p>Identification des determinants structurels de la penurie (age, salaires relatifs, conjoncture, tension metier).</p>
+          <p class="muted">Methods: panel models, robustness checks, policy interpretation</p>
+        </article>
+      </div>
     </div>
   </main>
 

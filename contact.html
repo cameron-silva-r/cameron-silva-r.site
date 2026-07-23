@@ -43,7 +43,12 @@
 
       <section class="panel">
         <h2>Message rapide</h2>
-        <form class="contact-form" action="#" method="post">
+        <form class="contact-form" id="contact-form" action="https://formsubmit.co/nom.prenom@email.com" method="POST">
+          <input type="hidden" name="_subject" value="Nouveau message depuis le site Researcher">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://cameron-silva-r.github.io/cameron-silva-r.site/contact.html">
+
           <label for="name">Nom</label>
           <input id="name" name="name" type="text" placeholder="Votre nom" required>
 
@@ -51,9 +56,10 @@
           <input id="email" name="email" type="email" placeholder="vous@exemple.com" required>
 
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Votre message"></textarea>
+          <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
 
           <button type="submit" class="btn btn-primary">Envoyer</button>
+          <p class="small-note">Le formulaire envoie directement le message. Remplace l'email dans le code par ton adresse.</p>
         </form>
       </section>
     </div>

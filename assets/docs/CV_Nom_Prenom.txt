@@ -1,0 +1,21 @@
+NOM PRENOM
+
+Titre
+Chercheur en economie des transports et data science.
+
+Coordonnees
+- Email: nom.prenom@email.com
+- LinkedIn: linkedin.com/in/tonprofil
+- GitHub: github.com/toncompte
+
+Experience
+- Poste actuel - Institution (2024 - Present)
+- Poste precedent - Organisation (2021 - 2024)
+
+Formation
+- Master / Doctorat - Universite
+
+Competences
+- Python, R, Econometrie, Forecasting, Policy Analysis
+
+Remplace ce fichier par ton CV PDF final tout en gardant le meme chemin si tu veux conserver le lien actuel.

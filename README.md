@@ -1,4 +1,4 @@
-# Site GitHub Pages - Template Researcher
+# Site GitHub Pages - Cameron Silva
 
 Ce dossier contient un site statique pret pour GitHub Pages.
 

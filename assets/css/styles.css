@@ -101,6 +101,43 @@ body {
   padding: 5rem 0 3rem;
 }
 
+.home-compact {
+  padding: 1.4rem;
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.profile-block {
+  text-align: center;
+}
+
+.profile-photo {
+  width: 170px;
+  height: 170px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+}
+
+.profile-name {
+  margin-top: 0.7rem;
+  margin-bottom: 0;
+  font-size: 1.4rem;
+}
+
+.home-links {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -392,6 +429,16 @@ h1 {
 }
 
 @media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .home-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
   .hero-grid,
   .cards-grid,
   .two-col,

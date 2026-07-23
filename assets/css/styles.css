@@ -440,6 +440,21 @@ h1 {
   padding: 1.35rem 1.5rem;
 }
 
+.article-prose p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.article-prose p.lead {
+  text-align: left;
+}
+
+.article-prose p:not(.lead)::first-letter {
+  font-weight: 700;
+  color: var(--accent-dark);
+  letter-spacing: 0.01em;
+}
+
 .article-meta-row {
   display: flex;
   justify-content: space-between;

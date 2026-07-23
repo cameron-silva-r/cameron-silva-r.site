@@ -112,6 +112,30 @@ main .small-note {
   color: var(--text);
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.lang-switch a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
+}
+
+.lang-switch a.active {
+  color: var(--accent-dark);
+  background: #e9eef6;
+}
+
+.lang-switch span {
+  color: var(--stroke);
+}
+
 .hero {
   padding: 5rem 0 3rem;
 }
@@ -740,6 +764,10 @@ h1 {
     border-radius: 14px;
     padding: 0.65rem;
     box-shadow: var(--shadow);
+  }
+
+  .lang-switch {
+    margin-left: auto;
   }
 
   .site-nav.open {

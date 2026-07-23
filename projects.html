@@ -30,47 +30,71 @@
     <div class="container page-intro">
       <p class="eyebrow">Recherche</p>
       <h1>Research Projects</h1>
-      <p class="lead">Exemples de projets a personnaliser. Remplace les titres et descriptions par tes contenus reels.</p>
+      <p class="lead">Organisation visuelle des projets en cours et termines, avec acces aux ressources disponibles.</p>
     </div>
 
-    <div class="container">
-      <div class="project-filters" role="group" aria-label="Filtrer les projets">
-        <button class="filter-btn active" type="button" data-filter="all">Tous</button>
-        <button class="filter-btn" type="button" data-filter="en-cours">En cours</button>
-        <button class="filter-btn" type="button" data-filter="termine">Terminés</button>
-      </div>
+    <div class="container projects-split" aria-label="Projets en cours et termines">
+      <section class="projects-column projects-left" aria-label="En cours">
+        <h2>En cours</h2>
 
-      <div class="project-list">
-        <article class="panel project-row" data-status="en-cours">
+        <article class="panel project-row">
           <div class="project-meta">
             <span class="status-pill status-live">En cours</span>
             <span class="muted">Periode a definir</span>
           </div>
-          <h2>Projet de recherche en cours 1</h2>
+          <h3>Projet de recherche en cours 1</h3>
           <p>Description courte du projet, des objectifs et du contexte.</p>
-          <p class="muted">Methodes: a personnaliser</p>
+          <div class="project-links" aria-label="Ressources du projet 1">
+            <a class="btn btn-outline btn-mini" href="assets/docs/projet-1.pdf" download aria-label="Telecharger le PDF du projet 1">Telecharger le PDF</a>
+            <a class="btn btn-outline btn-mini" href="https://github.com/cameron-silva-r/cameron-silva-r.site" target="_blank" rel="noopener noreferrer" aria-label="Voir le code open-source du projet 1">Code open-source</a>
+          </div>
         </article>
 
-        <article class="panel project-row" data-status="en-cours">
+        <article class="panel project-row">
           <div class="project-meta">
             <span class="status-pill status-live">En cours</span>
             <span class="muted">Periode a definir</span>
           </div>
-          <h2>Projet de recherche en cours 2</h2>
+          <h3>Projet de recherche en cours 2</h3>
           <p>Description courte du projet, des objectifs et de la valeur apportee.</p>
-          <p class="muted">Methodes: a personnaliser</p>
+          <div class="project-links" aria-label="Ressources du projet 2">
+            <span class="resource-unavailable">PDF non disponible</span>
+            <span class="resource-unavailable">Code open-source non disponible</span>
+          </div>
         </article>
+      </section>
 
-        <article class="panel project-row" data-status="termine">
+      <section class="projects-divider" aria-hidden="true"></section>
+
+      <section class="projects-column projects-right" aria-label="Termines">
+        <h2>Termines</h2>
+
+        <article class="panel project-row">
           <div class="project-meta">
             <span class="status-pill">Terminé</span>
             <span class="muted">Periode a definir</span>
           </div>
-          <h2>Projet de recherche termine</h2>
+          <h3>Projet de recherche termine 1</h3>
           <p>Resume synthese d'un projet finalise et de ses resultats principaux.</p>
-          <p class="muted">Methodes: a personnaliser</p>
+          <div class="project-links" aria-label="Ressources du projet termine 1">
+            <a class="btn btn-outline btn-mini" href="assets/docs/projet-termine-1.pdf" download aria-label="Telecharger le PDF du projet termine 1">Telecharger le PDF</a>
+            <a class="btn btn-outline btn-mini" href="https://github.com/cameron-silva-r/cameron-silva-r.site" target="_blank" rel="noopener noreferrer" aria-label="Voir le code open-source du projet termine 1">Code open-source</a>
+          </div>
         </article>
-      </div>
+
+        <article class="panel project-row">
+          <div class="project-meta">
+            <span class="status-pill">Terminé</span>
+            <span class="muted">Periode a definir</span>
+          </div>
+          <h3>Projet de recherche termine 2</h3>
+          <p>Resume synthese d'un second projet finalise.</p>
+          <div class="project-links" aria-label="Ressources du projet termine 2">
+            <span class="resource-unavailable">PDF non disponible</span>
+            <span class="resource-unavailable">Code open-source non disponible</span>
+          </div>
+        </article>
+      </section>
     </div>
   </main>
 

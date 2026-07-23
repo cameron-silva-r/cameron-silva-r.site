@@ -120,6 +120,8 @@ main .small-note {
   width: 88px;
   height: 34px;
   padding: 3px;
+  box-sizing: border-box;
+  overflow: hidden;
   border-radius: 999px;
   border: 1px solid var(--stroke);
   background: #fffdf9;
@@ -132,16 +134,16 @@ main .small-note {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: calc(50% - 3px);
+  width: calc((100% - 6px) / 2);
   height: calc(100% - 6px);
   border-radius: 999px;
   background: #e9eef6;
   box-shadow: 0 1px 3px rgba(26, 36, 48, 0.15);
-  transition: transform 0.25s ease;
+  transition: left 0.25s ease;
 }
 
-.lang-switch:has(.lang-option:last-child.active) .lang-switch-thumb {
-  transform: translateX(100%);
+.lang-switch.lang-en .lang-switch-thumb {
+  left: calc(50%);
 }
 
 .lang-switch .lang-option {
@@ -150,9 +152,11 @@ main .small-note {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
   text-decoration: none;
   color: var(--muted);
   height: 100%;
+  line-height: 1;
   border-radius: 6px;
 }
 

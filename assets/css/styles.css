@@ -138,6 +138,25 @@ body {
   gap: 0.65rem;
 }
 
+.home-overview {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.overview-panel h2 {
+  margin-bottom: 0.7rem;
+  font-size: 1.3rem;
+}
+
+.overview-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -436,6 +455,10 @@ h1 {
 
   .home-links {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-overview {
     grid-template-columns: 1fr;
   }
 

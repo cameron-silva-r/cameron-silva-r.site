@@ -30,6 +30,21 @@ body {
   line-height: 1.65;
 }
 
+main p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+main .eyebrow,
+main .muted,
+main .blog-tags,
+main .blog-head-row p,
+main .article-meta-row p,
+main figcaption,
+main .small-note {
+  text-align: left;
+}
+
 .container {
   width: min(1100px, 92vw);
   margin: 0 auto;
@@ -450,6 +465,12 @@ h1 {
 }
 
 .article-prose p:not(.lead)::first-letter {
+  float: left;
+  font-family: "Fraunces", serif;
+  font-size: 2.15rem;
+  line-height: 0.95;
+  padding-right: 0.2rem;
+  padding-top: 0.08rem;
   font-weight: 700;
   color: var(--accent-dark);
   letter-spacing: 0.01em;

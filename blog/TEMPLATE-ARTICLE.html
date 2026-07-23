@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog - Titre de l'article">
+  <title>Titre de l'article | Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Research Projects</a>
+        <a class="active" href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact me</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel">
+      <!-- 1) METADONNEES DE L'ARTICLE -->
+      <div class="article-meta-row">
+        <p class="eyebrow">Blog · 23 Jul 2026</p>
+        <div class="article-tags">
+          <span class="article-tag">methodologie</span>
+          <span class="article-tag">donnees</span>
+          <span class="article-tag">publication</span>
+        </div>
+      </div>
+
+      <!-- 2) TITRE ET INTRO -->
+      <h1>Titre de l'article</h1>
+      <p class="lead">Introduction courte (2-3 phrases) qui donne envie de lire la suite.</p>
+
+      <!-- 3) IMAGE PRINCIPALE + LEGENDE -->
+      <figure class="article-figure">
+        <!-- Remplace le src par ton image -->
+        <img src="../assets/img/blog-placeholder.svg" alt="Description de l'image principale">
+        <figcaption>Legende de l'image principale (source, contexte, date, etc.).</figcaption>
+      </figure>
+
+      <!-- 4) PARAGRAPHES CLASSIQUES -->
+      <h2>Contexte</h2>
+      <p>Paragraphe de contexte. Tu peux ecrire normalement ici en HTML.</p>
+      <p>Deuxieme paragraphe de contexte si besoin.</p>
+
+      <!-- 5) ENCADRE / POINT CLE -->
+      <div class="article-callout">
+        <strong>Point cle:</strong> message principal que tu veux mettre en valeur.
+      </div>
+
+      <!-- 6) CITATION -->
+      <blockquote class="article-quote">
+        "Citation ou idee importante a mettre en evidence."
+      </blockquote>
+
+      <!-- 7) MISE EN PAGE EN 2 COLONNES -->
+      <section class="article-grid-2">
+        <div class="article-note">
+          <h3>Element A</h3>
+          <p>Texte court pour un comparatif ou un split visuel.</p>
+        </div>
+        <div class="article-note">
+          <h3>Element B</h3>
+          <p>Texte court pour un comparatif ou un split visuel.</p>
+        </div>
+      </section>
+
+      <!-- 8) IMAGE DANS LE CORPS + LEGENDE -->
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Description de l'image secondaire">
+        <figcaption>Legende de l'image secondaire.</figcaption>
+      </figure>
+
+      <!-- 9) TABLEAU -->
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Valeur</th>
+              <th>Commentaire</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exemple 1</td>
+              <td>123</td>
+              <td>Commentaire 1</td>
+            </tr>
+            <tr>
+              <td>Exemple 2</td>
+              <td>456</td>
+              <td>Commentaire 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 10) CHECKLIST -->
+      <h2>Points a retenir</h2>
+      <ul class="article-checklist">
+        <li>Point 1</li>
+        <li>Point 2</li>
+        <li>Point 3</li>
+      </ul>
+
+      <!-- 11) CONCLUSION -->
+      <h2>Conclusion</h2>
+      <p>Conclusion de l'article et ouverture eventuelle.</p>
+
+      <!-- 12) RETOUR AU BLOG -->
+      <p><a class="text-link" href="../blog.html">Retour au blog</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Contact me</a></p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Notes et actualités">
+  <title>Note | Notes &amp; Actualités</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html">Accueil</a>
+        <a href="cv.html">CV</a>
+        <a class="active" href="blog.html">Notes &amp; Actualités</a>
+        <a href="contact.html">Me contacter</a>
+      </nav>
+      <div class="lang-switch lang-fr" aria-label="Choix de langue">
+        <span class="lang-switch-thumb" aria-hidden="true"></span>
+        <a class="lang-option active" id="lang-switch-fr" href="note.html" lang="fr">FR</a>
+        <a class="lang-option" id="lang-switch-en" href="en/note.html" lang="en">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article
+      class="panel article-prose"
+      id="note-detail"
+      data-source="assets/data/notes.fr.json"
+      data-back-href="blog.html"
+      data-back-label="Retour aux notes"
+      data-not-found="Note introuvable."
+      data-eyebrow-prefix="Notes et actualités ·"
+      data-tag-labels='{"international":"International","finance":"Finance","politiquespubliques":"Politiques publiques"}'
+    >
+      <p class="lead">Chargement de la note…</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

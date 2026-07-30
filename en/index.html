@@ -52,8 +52,15 @@
     <section class="container home-overview single-panel" aria-label="Overview">
       <article class="panel overview-panel">
         <h2>Latest notes &amp; analysis</h2>
-        <ul class="overview-list">
-          <li><a class="text-link" href="blog/scenarios-2040.html">Note 1</a></li>
+        <ul
+          class="overview-list"
+          id="home-notes-list"
+          data-source="../assets/data/notes.en.json"
+          data-limit="3"
+          data-empty-label="No notes published yet."
+          data-error-label="Notes could not be loaded right now."
+        >
+          <li class="muted">Loading…</li>
         </ul>
       </article>
     </section>

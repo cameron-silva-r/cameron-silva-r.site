@@ -1,0 +1,15 @@
+[
+  {
+    "slug": "scenarios-2040",
+    "date": "2026-07-20",
+    "title": "Note 1",
+    "summary": "Résumé court de la note avec une accroche simple et lisible.",
+    "tags": ["international", "finance", "politiquespubliques"],
+    "image": "blog-placeholder.svg",
+    "body": [
+      "Introduction de la note. Remplace ce texte par une présentation courte du sujet.",
+      "Paragraphe 1 à personnaliser.",
+      "Paragraphe 2 à personnaliser."
+    ]
+  }
+]

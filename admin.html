@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Outil local de génération des notes">
+  <title>Admin — Notes | Cameron Silva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .admin-field { margin-bottom: 18px; }
+    .admin-field label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .admin-field .hint { display: block; margin-top: 4px; font-size: 0.85rem; color: var(--muted); font-weight: 400; }
+    .admin-field input[type="text"],
+    .admin-field input[type="date"],
+    .admin-field select,
+    .admin-field textarea {
+      width: 100%;
+      font-family: 'Manrope', sans-serif;
+      font-size: 1rem;
+      padding: 10px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      box-sizing: border-box;
+    }
+    .admin-field textarea { min-height: 100px; resize: vertical; }
+    .tags-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+    .tag-check { display: flex; align-items: center; gap: 6px; font-weight: 400; }
+    .admin-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .admin-row .admin-field { flex: 1 1 220px; }
+    .status-message { margin-top: 16px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; }
+    .status-message.success { background: #e6f4ea; color: #1e7a34; }
+    .status-message.error { background: #fbe7e7; color: #b3261e; }
+    .status-message.warn { background: #fff6e5; color: #8a5a00; }
+    .admin-note { border-left: 3px solid var(--accent); padding-left: 14px; margin: 18px 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">Cameron Silva</a>
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html">Accueil</a>
+        <a href="blog.html">Notes &amp; Actualités</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container panel">
+      <h1>Générateur de notes (outil local)</h1>
+      <p class="lead">Cette page n'est pas un vrai "mode admin" connecté au site : GitHub Pages est un hébergement statique, sans base de données ni serveur. Ce formulaire te permet simplement de remplir les informations d'une note et de générer le fichier de données correspondant, sans écrire de HTML toi-même.</p>
+
+      <div class="admin-note">
+        <p><strong>Comment ça marche :</strong></p>
+        <p>1. Choisis la langue, remplis les champs, coche les thèmes.</p>
+        <p>2. Clique sur « Générer et télécharger le fichier JSON ».</p>
+        <p>3. Remplace le fichier téléchargé dans <code>assets/data/</code> (même nom que l'ancien).</p>
+        <p>4. Commit + push (je peux le faire pour toi si tu me le demandes).</p>
+        <p>Le site (blog.html, l'accueil et les pages de note) lit automatiquement ce fichier : aucune page HTML à créer.</p>
+      </div>
+
+      <div class="admin-note">
+        <p><strong>Limite technique :</strong> ouverte directement en local (double-clic sur le fichier), cette page ne peut pas toujours relire le fichier JSON existant (restriction de sécurité des navigateurs sur les fichiers locaux). Tu peux quand même créer une nouvelle note sans problème. Pour éditer une note déjà publiée avec pré-remplissage automatique, ouvre plutôt cette page directement sur le site en ligne : <code>https://cameron-silva-r.github.io/cameron-silva-r.site/admin.html</code>. Cette page n'est reliée depuis aucun menu, elle reste donc discrète.</p>
+      </div>
+
+      <form id="note-form" novalidate>
+        <div class="admin-row">
+          <div class="admin-field">
+            <label for="note-lang">Langue de la note</label>
+            <select id="note-lang">
+              <option value="fr">Français (notes.fr.json)</option>
+              <option value="en">English (notes.en.json)</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label for="existing-note">Note existante à éditer</label>
+            <select id="existing-note">
+              <option value="">— Nouvelle note —</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-field">
+          <label for="field-title">Titre</label>
+          <input type="text" id="field-title" placeholder="Ex : Perspectives 2040 sur le fret routier">
+        </div>
+
+        <div class="admin-row">
+          <div class="admin-field">
+            <label for="field-slug">Identifiant (slug)</label>
+            <input type="text" id="field-slug" placeholder="perspectives-2040">
+            <span class="hint">Généré automatiquement depuis le titre, modifiable. Utilisé dans le lien de la note.</span>
+          </div>
+          <div class="admin-field">
+            <label for="field-date">Date</label>
+            <input type="date" id="field-date">
+          </div>
+        </div>
+
+        <div class="admin-field">
+          <label for="field-image">Image (nom de fichier dans assets/img/)</label>
+          <input type="text" id="field-image" value="blog-placeholder.svg">
+        </div>
+
+        <div class="admin-field">
+          <label>Thèmes</label>
+          <div class="tags-wrap" id="tags-wrap"></div>
+        </div>
+
+        <div class="admin-field">
+          <label for="field-summary">Résumé (affiché dans la liste des notes)</label>
+          <textarea id="field-summary" placeholder="Une à deux phrases d'accroche."></textarea>
+        </div>
+
+        <div class="admin-field">
+          <label for="field-body">Corps du texte</label>
+          <textarea id="field-body" style="min-height: 220px;" placeholder="Écris chaque paragraphe séparé par une ligne vide."></textarea>
+          <span class="hint">Un paragraphe par bloc séparé d'une ligne vide. Les balises HTML simples (&lt;strong&gt;, &lt;a&gt;…) sont autorisées si besoin.</span>
+        </div>
+
+        <button type="button" id="generate-btn" class="btn btn-outline">Générer et télécharger le fichier JSON</button>
+        <div id="status-message"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+    </div>
+  </footer>
+
+  <script>
+    const state = { notes: { fr: [], en: [] } };
+
+    const els = {
+      lang: document.querySelector('#note-lang'),
+      existing: document.querySelector('#existing-note'),
+      title: document.querySelector('#field-title'),
+      slug: document.querySelector('#field-slug'),
+      date: document.querySelector('#field-date'),
+      image: document.querySelector('#field-image'),
+      summary: document.querySelector('#field-summary'),
+      body: document.querySelector('#field-body'),
+      tagsWrap: document.querySelector('#tags-wrap'),
+      status: document.querySelector('#status-message'),
+    };
+
+    const TAGS = {
+      fr: [
+        { key: 'international', label: 'International' },
+        { key: 'finance', label: 'Finance' },
+        { key: 'politiquespubliques', label: 'Politiques publiques' },
+      ],
+      en: [
+        { key: 'international', label: 'International' },
+        { key: 'finance', label: 'Finance' },
+        { key: 'publicpolicy', label: 'Public policy' },
+      ],
+    };
+
+    const SOURCES = {
+      fr: 'assets/data/notes.fr.json',
+      en: 'assets/data/notes.en.json',
+    };
+
+    function slugify(text) {
+      return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    }
+
+    function setStatus(message, type) {
+      els.status.textContent = message;
+      els.status.className = `status-message ${type || ''}`;
+    }
+
+    function renderTags(lang, checkedKeys) {
+      const checked = checkedKeys || [];
+      els.tagsWrap.innerHTML = TAGS[lang]
+        .map(
+          (tag) => `
+            <label class="tag-check">
+              <input type="checkbox" value="${tag.key}" ${checked.includes(tag.key) ? 'checked' : ''}>
+              ${tag.label}
+            </label>
+          `
+        )
+        .join('');
+    }
+
+    function resetForm() {
+      els.title.value = '';
+      els.slug.value = '';
+      delete els.slug.dataset.touched;
+      els.date.value = new Date().toISOString().slice(0, 10);
+      els.image.value = 'blog-placeholder.svg';
+      els.summary.value = '';
+      els.body.value = '';
+      renderTags(els.lang.value, []);
+    }
+
+    function fillForm(note) {
+      els.title.value = note.title || '';
+      els.slug.value = note.slug || '';
+      els.slug.dataset.touched = 'true';
+      els.date.value = note.date || '';
+      els.image.value = note.image || 'blog-placeholder.svg';
+      els.summary.value = note.summary || '';
+      els.body.value = (note.body || []).join('\n\n');
+      renderTags(els.lang.value, note.tags || []);
+    }
+
+    function loadExisting(lang) {
+      fetch(SOURCES[lang])
+        .then((response) => response.json())
+        .then((notes) => {
+          state.notes[lang] = notes;
+          els.existing.innerHTML =
+            '<option value="">— Nouvelle note —</option>' +
+            notes
+              .map((note) => `<option value="${note.slug}">${note.title} (${note.slug})</option>`)
+              .join('');
+        })
+        .catch(() => {
+          state.notes[lang] = [];
+          els.existing.innerHTML = '<option value="">— Nouvelle note —</option>';
+          setStatus(
+            "Impossible de relire le fichier existant depuis ce contexte (normal en ouverture locale directe). Tu peux quand même créer une nouvelle note ci-dessous.",
+            'warn'
+          );
+        });
+    }
+
+    els.lang.addEventListener('change', () => {
+      renderTags(els.lang.value, []);
+      loadExisting(els.lang.value);
+      resetForm();
+    });
+
+    els.existing.addEventListener('change', () => {
+      const slug = els.existing.value;
+      if (!slug) {
+        resetForm();
+        return;
+      }
+      const note = (state.notes[els.lang.value] || []).find((item) => item.slug === slug);
+      if (note) {
+        fillForm(note);
+      }
+    });
+
+    els.title.addEventListener('input', () => {
+      if (!els.slug.dataset.touched) {
+        els.slug.value = slugify(els.title.value);
+      }
+    });
+
+    els.slug.addEventListener('input', () => {
+      els.slug.dataset.touched = 'true';
+    });
+
+    document.querySelector('#generate-btn').addEventListener('click', () => {
+      const lang = els.lang.value;
+      const slug = (els.slug.value || slugify(els.title.value)).trim();
+
+      if (!els.title.value.trim() || !slug || !els.date.value) {
+        setStatus('Merci de renseigner au minimum le titre, le slug et la date.', 'error');
+        return;
+      }
+
+      const tags = Array.from(els.tagsWrap.querySelectorAll('input:checked')).map((input) => input.value);
+      const body = els.body.value
+        .split(/\n\s*\n/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean);
+
+      const newNote = {
+        slug,
+        date: els.date.value,
+        title: els.title.value.trim(),
+        summary: els.summary.value.trim(),
+        tags,
+        image: els.image.value.trim() || 'blog-placeholder.svg',
+        body,
+      };
+
+      const existing = state.notes[lang] || [];
+      const withoutCurrent = existing.filter((note) => note.slug !== slug);
+      const updated = [...withoutCurrent, newNote].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+      const blob = new Blob([JSON.stringify(updated, null, 2) + '\n'], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `notes.${lang}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      setStatus(
+        `Fichier notes.${lang}.json généré et téléchargé (${updated.length} note(s) au total). Remplace-le dans assets/data/ puis commit + push.`,
+        'success'
+      );
+    });
+
+    renderTags(els.lang.value, []);
+    els.date.value = new Date().toISOString().slice(0, 10);
+    loadExisting(els.lang.value);
+  </script>
+</body>
+</html>

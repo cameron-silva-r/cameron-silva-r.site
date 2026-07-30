@@ -168,7 +168,9 @@ function renderNoteDetail() {
       const tagsHtml = (note.tags || [])
         .map((tag) => `<span class="article-tag">${escapeHtml(tagLabels[tag] || tag)}</span>`)
         .join('');
-      const bodyHtml = (note.body || []).map((paragraph) => `<p>${paragraph}</p>`).join('');
+      const bodyHtml = note.bodyHtml
+        ? note.bodyHtml
+        : (note.body || []).map((paragraph) => `<p>${paragraph}</p>`).join('');
       const eyebrowPrefix = container.dataset.eyebrowPrefix || '';
 
       container.innerHTML = `

@@ -4,17 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Outil local de génération des notes">
+  <meta name="description" content="Publier une note directement sur le site">
   <title>Admin — Notes | Cameron Silva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
   <style>
+    .admin-block { margin: 1.8rem 0; }
+    .admin-block h2 { font-size: 1.1rem; margin-bottom: 0.7rem; }
     .admin-field { margin-bottom: 18px; }
     .admin-field label { display: block; font-weight: 600; margin-bottom: 6px; }
     .admin-field .hint { display: block; margin-top: 4px; font-size: 0.85rem; color: var(--muted); font-weight: 400; }
     .admin-field input[type="text"],
+    .admin-field input[type="password"],
     .admin-field input[type="date"],
     .admin-field select,
     .admin-field textarea {
@@ -28,7 +31,7 @@
       color: var(--text);
       box-sizing: border-box;
     }
-    .admin-field textarea { min-height: 100px; resize: vertical; }
+    .admin-field textarea { min-height: 80px; resize: vertical; }
     .tags-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
     .tag-check { display: flex; align-items: center; gap: 6px; font-weight: 400; }
     .admin-row { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -38,6 +41,34 @@
     .status-message.error { background: #fbe7e7; color: #b3261e; }
     .status-message.warn { background: #fff6e5; color: #8a5a00; }
     .admin-note { border-left: 3px solid var(--accent); padding-left: 14px; margin: 18px 0; color: var(--muted); }
+    .gh-connect { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+    .gh-connect .admin-field { flex: 1 1 320px; margin-bottom: 0; }
+    .conn-status { margin-top: 10px; font-size: 0.9rem; }
+    .conn-status.success { color: #1e7a34; }
+    .conn-status.error { color: #b3261e; }
+    .form-locked { opacity: 0.5; pointer-events: none; }
+    .editor-toolbar { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .editor-toolbar button {
+      border: 1px solid var(--stroke);
+      background: var(--bg-elevated);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .editor-toolbar button:hover { background: var(--bg); }
+    .note-editor {
+      min-height: 260px;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+    }
+    .note-editor:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .note-editor:empty::before { content: attr(data-placeholder); color: var(--muted); }
+    .note-editor img { max-width: 100%; border-radius: 12px; margin: 0.8rem 0; display: block; }
+    .forget-link { margin-top: 8px; background: none; border: none; padding: 0; }
   </style>
 </head>
 <body>
@@ -53,78 +84,101 @@
 
   <main class="section">
     <div class="container panel">
-      <h1>Générateur de notes (outil local)</h1>
-      <p class="lead">Cette page n'est pas un vrai "mode admin" connecté au site : GitHub Pages est un hébergement statique, sans base de données ni serveur. Ce formulaire te permet simplement de remplir les informations d'une note et de générer le fichier de données correspondant, sans écrire de HTML toi-même.</p>
+      <h1>Publier une note</h1>
+      <p class="lead">Rédige directement ici, avec mise en forme (gras, italique, souligné, images), puis clique sur « Publier » : la note est écrite dans le dépôt GitHub et le site se met à jour automatiquement en général en moins d'une minute. Aucun fichier à échanger, aucun HTML à écrire.</p>
 
       <div class="admin-note">
-        <p><strong>Comment ça marche :</strong></p>
-        <p>1. Choisis la langue, remplis les champs, coche les thèmes.</p>
-        <p>2. Clique sur « Générer et télécharger le fichier JSON ».</p>
-        <p>3. Remplace le fichier téléchargé dans <code>assets/data/</code> (même nom que l'ancien).</p>
-        <p>4. Commit + push (je peux le faire pour toi si tu me le demandes).</p>
-        <p>Le site (blog.html, l'accueil et les pages de note) lit automatiquement ce fichier : aucune page HTML à créer.</p>
+        <p><strong>Pourquoi une connexion est demandée :</strong> ce site est hébergé de façon statique (GitHub Pages), sans serveur ni base de données. Pour que cette page puisse écrire à ta place dans le dépôt, il faut une preuve que c'est bien toi — sinon n'importe quel visiteur pourrait modifier le site. Le jeton ci-dessous sert uniquement à l'étape « Publier », il ne verrouille pas l'accès à cette page.</p>
       </div>
 
-      <div class="admin-note">
-        <p><strong>Limite technique :</strong> ouverte directement en local (double-clic sur le fichier), cette page ne peut pas toujours relire le fichier JSON existant (restriction de sécurité des navigateurs sur les fichiers locaux). Tu peux quand même créer une nouvelle note sans problème. Pour éditer une note déjà publiée avec pré-remplissage automatique, ouvre plutôt cette page directement sur le site en ligne : <code>https://cameron-silva-r.github.io/cameron-silva-r.site/admin.html</code>. Cette page n'est reliée depuis aucun menu, elle reste donc discrète.</p>
-      </div>
-
-      <form id="note-form" novalidate>
-        <div class="admin-row">
+      <section class="admin-block">
+        <h2>1. Connexion GitHub</h2>
+        <div class="gh-connect">
           <div class="admin-field">
-            <label for="note-lang">Langue de la note</label>
-            <select id="note-lang">
-              <option value="fr">Français (notes.fr.json)</option>
-              <option value="en">English (notes.en.json)</option>
-            </select>
+            <label for="gh-token">Jeton d'accès personnel GitHub</label>
+            <input type="password" id="gh-token" placeholder="github_pat_… ou ghp_…" autocomplete="off">
+            <span class="hint">
+              Crée un jeton sur github.com → Settings → Developer settings → Fine-grained tokens, limité au seul dépôt <code>cameron-silva-r.site</code>, avec la permission <code>Contents: Read and write</code> uniquement, et une expiration courte (ex. 90 jours).
+            </span>
           </div>
+          <button type="button" id="connect-btn" class="btn btn-outline">Se connecter</button>
+        </div>
+        <label class="tag-check" style="margin-top: 12px;">
+          <input type="checkbox" id="remember-token" checked>
+          Se souvenir de ce jeton sur cet appareil (à cocher uniquement sur ton ordinateur personnel)
+        </label>
+        <p id="conn-status" class="conn-status"></p>
+        <button type="button" id="forget-token-btn" class="text-link forget-link">Oublier le jeton enregistré sur cet appareil</button>
+      </section>
+
+      <form id="note-form" class="form-locked" novalidate>
+        <section class="admin-block">
+          <h2>2. Informations de la note</h2>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label for="note-lang">Langue</label>
+              <select id="note-lang">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label for="existing-note">Note existante à éditer</label>
+              <select id="existing-note">
+                <option value="">— Nouvelle note —</option>
+              </select>
+            </div>
+          </div>
+
           <div class="admin-field">
-            <label for="existing-note">Note existante à éditer</label>
-            <select id="existing-note">
-              <option value="">— Nouvelle note —</option>
-            </select>
+            <label for="field-title">Titre</label>
+            <input type="text" id="field-title" placeholder="Ex : Perspectives 2040 sur le fret routier">
           </div>
-        </div>
 
-        <div class="admin-field">
-          <label for="field-title">Titre</label>
-          <input type="text" id="field-title" placeholder="Ex : Perspectives 2040 sur le fret routier">
-        </div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label for="field-slug">Identifiant (slug)</label>
+              <input type="text" id="field-slug" placeholder="perspectives-2040">
+              <span class="hint">Généré depuis le titre, modifiable. Utilisé dans le lien de la note.</span>
+            </div>
+            <div class="admin-field">
+              <label for="field-date">Date</label>
+              <input type="date" id="field-date">
+            </div>
+          </div>
 
-        <div class="admin-row">
           <div class="admin-field">
-            <label for="field-slug">Identifiant (slug)</label>
-            <input type="text" id="field-slug" placeholder="perspectives-2040">
-            <span class="hint">Généré automatiquement depuis le titre, modifiable. Utilisé dans le lien de la note.</span>
+            <label>Thèmes</label>
+            <div class="tags-wrap" id="tags-wrap"></div>
           </div>
+
           <div class="admin-field">
-            <label for="field-date">Date</label>
-            <input type="date" id="field-date">
+            <label for="field-summary">Résumé (affiché dans la liste des notes)</label>
+            <textarea id="field-summary" placeholder="Une à deux phrases d'accroche."></textarea>
           </div>
-        </div>
+        </section>
 
-        <div class="admin-field">
-          <label for="field-image">Image (nom de fichier dans assets/img/)</label>
-          <input type="text" id="field-image" value="blog-placeholder.svg">
-        </div>
+        <section class="admin-block">
+          <h2>3. Contenu de la note</h2>
+          <div class="editor-toolbar">
+            <button type="button" data-cmd="bold" title="Gras"><strong>G</strong></button>
+            <button type="button" data-cmd="italic" title="Italique"><em>I</em></button>
+            <button type="button" data-cmd="underline" title="Souligné"><u>S</u></button>
+            <button type="button" id="insert-link-btn" title="Insérer un lien">Lien</button>
+            <button type="button" id="insert-image-btn" title="Insérer une image">🖼 Image</button>
+            <input type="file" id="image-input" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="display:none;">
+          </div>
+          <div
+            class="panel article-prose note-editor"
+            id="note-editor"
+            contenteditable="true"
+            data-placeholder="Écris ta note ici…"
+          ></div>
+          <span class="hint">Sélectionne du texte puis clique sur G / I / S pour le mettre en forme. « Image » envoie directement un fichier (PNG, JPG, WebP, SVG) dans le dépôt et l'insère à l'endroit du curseur.</span>
+        </section>
 
-        <div class="admin-field">
-          <label>Thèmes</label>
-          <div class="tags-wrap" id="tags-wrap"></div>
-        </div>
-
-        <div class="admin-field">
-          <label for="field-summary">Résumé (affiché dans la liste des notes)</label>
-          <textarea id="field-summary" placeholder="Une à deux phrases d'accroche."></textarea>
-        </div>
-
-        <div class="admin-field">
-          <label for="field-body">Corps du texte</label>
-          <textarea id="field-body" style="min-height: 220px;" placeholder="Écris chaque paragraphe séparé par une ligne vide."></textarea>
-          <span class="hint">Un paragraphe par bloc séparé d'une ligne vide. Les balises HTML simples (&lt;strong&gt;, &lt;a&gt;…) sont autorisées si besoin.</span>
-        </div>
-
-        <button type="button" id="generate-btn" class="btn btn-outline">Générer et télécharger le fichier JSON</button>
+        <button type="button" id="publish-btn" class="btn btn-outline">Publier sur le site</button>
+        <button type="button" id="reset-btn" class="text-link">Nouvelle note (vider le formulaire)</button>
         <div id="status-message"></div>
       </form>
     </div>
@@ -137,18 +191,27 @@
   </footer>
 
   <script>
-    const state = { notes: { fr: [], en: [] } };
+    const GITHUB = { owner: 'cameron-silva-r', repo: 'cameron-silva-r.site', branch: 'main' };
+    const TOKEN_KEY = 'cs_admin_gh_token';
+
+    const state = { token: null, notes: { fr: [], en: [] }, sha: { fr: null, en: null } };
 
     const els = {
+      tokenInput: document.querySelector('#gh-token'),
+      rememberToken: document.querySelector('#remember-token'),
+      connectBtn: document.querySelector('#connect-btn'),
+      forgetBtn: document.querySelector('#forget-token-btn'),
+      connStatus: document.querySelector('#conn-status'),
+      form: document.querySelector('#note-form'),
       lang: document.querySelector('#note-lang'),
       existing: document.querySelector('#existing-note'),
       title: document.querySelector('#field-title'),
       slug: document.querySelector('#field-slug'),
       date: document.querySelector('#field-date'),
-      image: document.querySelector('#field-image'),
       summary: document.querySelector('#field-summary'),
-      body: document.querySelector('#field-body'),
       tagsWrap: document.querySelector('#tags-wrap'),
+      editor: document.querySelector('#note-editor'),
+      imageInput: document.querySelector('#image-input'),
       status: document.querySelector('#status-message'),
     };
 
@@ -165,11 +228,6 @@
       ],
     };
 
-    const SOURCES = {
-      fr: 'assets/data/notes.fr.json',
-      en: 'assets/data/notes.en.json',
-    };
-
     function slugify(text) {
       return text
         .toLowerCase()
@@ -182,6 +240,11 @@
     function setStatus(message, type) {
       els.status.textContent = message;
       els.status.className = `status-message ${type || ''}`;
+    }
+
+    function setConnStatus(message, type) {
+      els.connStatus.textContent = message;
+      els.connStatus.className = `conn-status ${type || ''}`;
     }
 
     function renderTags(lang, checkedKeys) {
@@ -199,13 +262,13 @@
     }
 
     function resetForm() {
+      els.existing.value = '';
       els.title.value = '';
       els.slug.value = '';
       delete els.slug.dataset.touched;
       els.date.value = new Date().toISOString().slice(0, 10);
-      els.image.value = 'blog-placeholder.svg';
       els.summary.value = '';
-      els.body.value = '';
+      els.editor.innerHTML = '';
       renderTags(els.lang.value, []);
     }
 
@@ -214,37 +277,183 @@
       els.slug.value = note.slug || '';
       els.slug.dataset.touched = 'true';
       els.date.value = note.date || '';
-      els.image.value = note.image || 'blog-placeholder.svg';
       els.summary.value = note.summary || '';
-      els.body.value = (note.body || []).join('\n\n');
+      els.editor.innerHTML = note.bodyHtml
+        ? note.bodyHtml
+        : (note.body || []).map((paragraph) => `<p>${paragraph}</p>`).join('');
       renderTags(els.lang.value, note.tags || []);
     }
 
-    function loadExisting(lang) {
-      fetch(SOURCES[lang])
-        .then((response) => response.json())
-        .then((notes) => {
-          state.notes[lang] = notes;
-          els.existing.innerHTML =
-            '<option value="">— Nouvelle note —</option>' +
-            notes
-              .map((note) => `<option value="${note.slug}">${note.title} (${note.slug})</option>`)
-              .join('');
-        })
-        .catch(() => {
-          state.notes[lang] = [];
-          els.existing.innerHTML = '<option value="">— Nouvelle note —</option>';
-          setStatus(
-            "Impossible de relire le fichier existant depuis ce contexte (normal en ouverture locale directe). Tu peux quand même créer une nouvelle note ci-dessous.",
-            'warn'
-          );
+    // --- Sanitisation du contenu riche avant publication (défense en profondeur) ---
+    function sanitizeHtml(html) {
+      const allowedTags = new Set(['P', 'B', 'STRONG', 'I', 'EM', 'U', 'BR', 'A', 'IMG', 'UL', 'OL', 'LI', 'H2', 'H3', 'BLOCKQUOTE', 'SPAN', 'DIV']);
+      const allowedAttrs = { A: ['href', 'target', 'rel'], IMG: ['src', 'alt'] };
+      const doc = new DOMParser().parseFromString(`<div>${html}</div>`, 'text/html');
+
+      function clean(node) {
+        Array.from(node.childNodes).forEach((child) => {
+          if (child.nodeType === Node.ELEMENT_NODE) {
+            if (!allowedTags.has(child.tagName)) {
+              while (child.firstChild) node.insertBefore(child.firstChild, child);
+              node.removeChild(child);
+              return;
+            }
+            Array.from(child.attributes).forEach((attr) => {
+              const allowed = allowedAttrs[child.tagName] || [];
+              if (!allowed.includes(attr.name)) child.removeAttribute(attr.name);
+            });
+            if (child.tagName === 'A') {
+              const href = child.getAttribute('href') || '';
+              if (!/^https?:\/\//i.test(href)) {
+                child.removeAttribute('href');
+              }
+              child.setAttribute('rel', 'noopener noreferrer');
+              child.setAttribute('target', '_blank');
+            }
+            clean(child);
+          } else if (child.nodeType !== Node.TEXT_NODE) {
+            node.removeChild(child);
+          }
         });
+      }
+
+      clean(doc.body.firstChild);
+      return doc.body.firstChild.innerHTML;
     }
 
+    // --- Appels API GitHub (Contents API) ---
+    function apiHeaders() {
+      return {
+        Authorization: `Bearer ${state.token}`,
+        Accept: 'application/vnd.github+json',
+      };
+    }
+
+    function contentsUrl(path) {
+      return `https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${path}`;
+    }
+
+    function b64EncodeUnicode(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function b64DecodeUnicode(str) {
+      return decodeURIComponent(escape(atob(str.replace(/\n/g, ''))));
+    }
+
+    async function getFile(path) {
+      const response = await fetch(`${contentsUrl(path)}?ref=${GITHUB.branch}`, { headers: apiHeaders() });
+      if (!response.ok) {
+        throw new Error(`Impossible de lire ${path} (${response.status})`);
+      }
+      const data = await response.json();
+      return { sha: data.sha, content: b64DecodeUnicode(data.content) };
+    }
+
+    async function putTextFile(path, contentStr, sha, message) {
+      const response = await fetch(contentsUrl(path), {
+        method: 'PUT',
+        headers: { ...apiHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message,
+          content: b64EncodeUnicode(contentStr),
+          branch: GITHUB.branch,
+          sha: sha || undefined,
+        }),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || `Échec de l'écriture de ${path} (${response.status})`);
+      }
+      return response.json();
+    }
+
+    async function putBinaryFile(path, base64Data, message) {
+      const response = await fetch(contentsUrl(path), {
+        method: 'PUT',
+        headers: { ...apiHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message,
+          content: base64Data,
+          branch: GITHUB.branch,
+        }),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || `Échec de l'envoi de ${path} (${response.status})`);
+      }
+      return response.json();
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function loadExisting(lang) {
+      if (!state.token) return;
+      try {
+        const file = await getFile(`assets/data/notes.${lang}.json`);
+        state.notes[lang] = JSON.parse(file.content);
+        state.sha[lang] = file.sha;
+        els.existing.innerHTML =
+          '<option value="">— Nouvelle note —</option>' +
+          state.notes[lang]
+            .map((note) => `<option value="${note.slug}">${note.title} (${note.slug})</option>`)
+            .join('');
+      } catch (error) {
+        setStatus(`Impossible de charger les notes existantes : ${error.message}`, 'error');
+      }
+    }
+
+    // --- Connexion / jeton ---
+    async function tryConnect(token) {
+      setConnStatus('Connexion en cours…', 'warn');
+      try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+        });
+        if (!response.ok) {
+          throw new Error('Jeton invalide ou droits insuffisants sur ce dépôt.');
+        }
+        state.token = token;
+        if (els.rememberToken.checked) {
+          localStorage.setItem(TOKEN_KEY, token);
+        }
+        setConnStatus(`Connecté au dépôt ${GITHUB.owner}/${GITHUB.repo}.`, 'success');
+        els.form.classList.remove('form-locked');
+        await loadExisting(els.lang.value);
+      } catch (error) {
+        setConnStatus(error.message, 'error');
+      }
+    }
+
+    els.connectBtn.addEventListener('click', () => {
+      const token = els.tokenInput.value.trim();
+      if (!token) {
+        setConnStatus('Colle ton jeton GitHub avant de te connecter.', 'error');
+        return;
+      }
+      tryConnect(token);
+    });
+
+    els.forgetBtn.addEventListener('click', () => {
+      localStorage.removeItem(TOKEN_KEY);
+      state.token = null;
+      els.tokenInput.value = '';
+      els.form.classList.add('form-locked');
+      setConnStatus('Jeton oublié sur cet appareil.', 'warn');
+    });
+
+    // --- Formulaire ---
     els.lang.addEventListener('change', () => {
       renderTags(els.lang.value, []);
-      loadExisting(els.lang.value);
       resetForm();
+      loadExisting(els.lang.value);
     });
 
     els.existing.addEventListener('change', () => {
@@ -254,9 +463,7 @@
         return;
       }
       const note = (state.notes[els.lang.value] || []).find((item) => item.slug === slug);
-      if (note) {
-        fillForm(note);
-      }
+      if (note) fillForm(note);
     });
 
     els.title.addEventListener('input', () => {
@@ -269,7 +476,63 @@
       els.slug.dataset.touched = 'true';
     });
 
-    document.querySelector('#generate-btn').addEventListener('click', () => {
+    document.querySelector('#reset-btn').addEventListener('click', resetForm);
+
+    // --- Barre d'outils de mise en forme ---
+    document.querySelectorAll('.editor-toolbar button[data-cmd]').forEach((button) => {
+      button.addEventListener('click', () => {
+        els.editor.focus();
+        document.execCommand(button.dataset.cmd, false, null);
+      });
+    });
+
+    document.querySelector('#insert-link-btn').addEventListener('click', () => {
+      const url = window.prompt('Adresse du lien (https://…) :');
+      if (!url) return;
+      els.editor.focus();
+      document.execCommand('createLink', false, url);
+    });
+
+    document.querySelector('#insert-image-btn').addEventListener('click', () => {
+      if (!state.token) {
+        setStatus('Connecte-toi avec ton jeton GitHub avant d\'ajouter une image.', 'error');
+        return;
+      }
+      els.imageInput.click();
+    });
+
+    els.imageInput.addEventListener('change', async () => {
+      const file = els.imageInput.files[0];
+      els.imageInput.value = '';
+      if (!file) return;
+
+      setStatus('Envoi de l\'image…', 'warn');
+      try {
+        const base64 = await fileToBase64(file);
+        const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+        const baseSlug = slugify(els.slug.value || els.title.value || 'note') || 'note';
+        const filename = `${baseSlug}-${Date.now()}.${ext}`;
+        await putBinaryFile(`assets/img/${filename}`, base64, `Ajout image pour note ${baseSlug}`);
+        const prefix = els.lang.value === 'en' ? '../assets/img/' : 'assets/img/';
+        els.editor.focus();
+        document.execCommand(
+          'insertHTML',
+          false,
+          `<img src="${prefix}${filename}" alt="${file.name.replace(/"/g, '')}">`
+        );
+        setStatus('Image envoyée et insérée.', 'success');
+      } catch (error) {
+        setStatus(`Échec de l'envoi de l'image : ${error.message}`, 'error');
+      }
+    });
+
+    // --- Publication ---
+    document.querySelector('#publish-btn').addEventListener('click', async () => {
+      if (!state.token) {
+        setStatus('Connecte-toi avec ton jeton GitHub avant de publier.', 'error');
+        return;
+      }
+
       const lang = els.lang.value;
       const slug = (els.slug.value || slugify(els.title.value)).trim();
 
@@ -278,47 +541,60 @@
         return;
       }
 
-      const tags = Array.from(els.tagsWrap.querySelectorAll('input:checked')).map((input) => input.value);
-      const body = els.body.value
-        .split(/\n\s*\n/)
-        .map((paragraph) => paragraph.trim())
-        .filter(Boolean);
+      setStatus('Publication en cours…', 'warn');
 
-      const newNote = {
-        slug,
-        date: els.date.value,
-        title: els.title.value.trim(),
-        summary: els.summary.value.trim(),
-        tags,
-        image: els.image.value.trim() || 'blog-placeholder.svg',
-        body,
-      };
+      try {
+        const path = `assets/data/notes.${lang}.json`;
+        const file = await getFile(path);
+        const notes = JSON.parse(file.content);
+        const tags = Array.from(els.tagsWrap.querySelectorAll('input:checked')).map((input) => input.value);
+        const existingNote = notes.find((note) => note.slug === slug);
 
-      const existing = state.notes[lang] || [];
-      const withoutCurrent = existing.filter((note) => note.slug !== slug);
-      const updated = [...withoutCurrent, newNote].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+        const newNote = {
+          slug,
+          date: els.date.value,
+          title: els.title.value.trim(),
+          summary: els.summary.value.trim(),
+          tags,
+          image: (existingNote && existingNote.image) || 'blog-placeholder.svg',
+          bodyHtml: sanitizeHtml(els.editor.innerHTML),
+        };
 
-      const blob = new Blob([JSON.stringify(updated, null, 2) + '\n'], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `notes.${lang}.json`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
+        const updated = [...notes.filter((note) => note.slug !== slug), newNote].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
 
-      setStatus(
-        `Fichier notes.${lang}.json généré et téléchargé (${updated.length} note(s) au total). Remplace-le dans assets/data/ puis commit + push.`,
-        'success'
-      );
+        await putTextFile(
+          path,
+          JSON.stringify(updated, null, 2) + '\n',
+          file.sha,
+          `${existingNote ? 'Met à jour' : 'Publie'} la note "${newNote.title}" (${slug})`
+        );
+
+        setStatus('Note publiée ! Elle sera visible sur le site dans une minute environ (le temps que GitHub Pages redéploie).', 'success');
+        await loadExisting(lang);
+        els.existing.value = slug;
+      } catch (error) {
+        setStatus(`Erreur lors de la publication : ${error.message}`, 'error');
+      }
     });
+
+    // --- Initialisation ---
+    try {
+      document.execCommand('defaultParagraphSeparator', false, 'p');
+    } catch (error) {
+      /* navigateur ne supportant pas cette option, sans impact */
+    }
 
     renderTags(els.lang.value, []);
     els.date.value = new Date().toISOString().slice(0, 10);
-    loadExisting(els.lang.value);
+
+    const savedToken = localStorage.getItem(TOKEN_KEY);
+    if (savedToken) {
+      els.tokenInput.value = savedToken;
+      tryConnect(savedToken);
+    }
   </script>
 </body>
 </html>
+

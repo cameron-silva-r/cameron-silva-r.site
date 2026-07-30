@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - Financer l'adaptation climatique">
+  <title>Financer l'adaptation climatique | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Financer l'adaptation climatique : ce que suggèrent les données macro">
+  <meta property="og:description" content="La profondeur du système financier atténue-t-elle le lien entre exposition climatique et coût de la dette publique ? Troisième et dernière partie d'une série sur l'économie de l'adaptation.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/financement-adaptation-climatique.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Financer l'adaptation climatique">
+  <meta name="twitter:description" content="La profondeur du système financier atténue-t-elle le lien entre exposition climatique et coût de la dette publique ?">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/financement-adaptation-climatique.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Financer l'adaptation climatique : ce que suggèrent les données macro",
+    "datePublished": "2026-08-18",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/financement-adaptation-climatique.html",
+    "description": "La profondeur du système financier atténue-t-elle le lien entre exposition climatique et coût de la dette publique ?",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 18 Aoû 2026 · 11 min de lecture · Volet 3/3</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">finance climatique</span>
+            <span class="article-tag">adaptation</span>
+            <span class="article-tag">risque de crédit</span>
+          </div>
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import statistics
+import requests
+from scipy import stats
+
+DEPTH_INDICATOR = "FD.AST.PRVT.GD.ZS"   # credit prive interieur, % PIB
+COST_INDICATOR = "GC.XPN.INTP.RV.ZS"    # interets payes, % des recettes publiques
+
+mediane_profondeur = statistics.median(profondeur[k] for k in communs)
+profond = [k for k in communs if profondeur[k] >= mediane_profondeur]
+superficiel = [k for k in communs if profondeur[k] < mediane_profondeur]
+
+r_profond, p_profond = stats.pearsonr(
+    [exposition[k] for k in profond], [cout_dette[k] for k in profond])
+r_superficiel, p_superficiel = stats.pearsonr(
+    [exposition[k] for k in superficiel], [cout_dette[k] for k in superficiel])</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/financement-adaptation-climatique.py" download>Télécharger le script complet (.py)</a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <h1>Financer l'adaptation climatique : ce que suggèrent les données macro</h1>
+      <p class="lead">L'ONU Environnement estime le déficit annuel de financement de l'adaptation climatique dans les pays en développement entre 187 et 359 milliards de dollars. Ce dernier volet de la série teste, à l'échelle macro, une intuition centrale du troisième papier du projet de thèse qui a inspiré cette série : un système financier profond protège-t-il un pays exposé au climat, en lui permettant de financer sa propre adaptation ?</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : financement de l'adaptation climatique" width="1200" height="700" loading="lazy">
+        <figcaption>Le financement de l'adaptation reste très inférieur aux besoins estimés, en particulier dans les pays où le système financier est le moins développé.</figcaption>
+      </figure>
+
+      <p class="muted">Cette note conclut une série en trois volets inspirée d'un projet de recherche doctorale sur les risques climatiques physiques, la résilience économique et le financement de l'adaptation. <a class="text-link" href="risque-souverain-climatique-adaptation.html">Le premier volet</a> testait le rôle de l'adaptation publique dans le risque souverain climatique ; <a class="text-link" href="chaines-valeur-climat.html">le deuxième</a> testait la propagation du risque climatique via les chaînes de valeur commerciales.</p>
+
+      <h2>Ce que montre la littérature sur le risque de crédit climatique</h2>
+      <p>Bolton &amp; Kacperczyk (2021, 2023) ont documenté qu'un « carbon premium » existe sur les marchés actions et obligataires : les investisseurs exigent un rendement supplémentaire pour détenir les titres d'émetteurs à forte intensité carbone, un phénomène désormais bien identifié pour le risque de transition. Le risque physique et son financement restent moins stabilisés : la BCE (2024) et la Banque des règlements internationaux (Pozdyshev, Lobanov &amp; Ilinsky, 2025) appellent à mieux intégrer le risque climatique physique dans l'évaluation prudentielle du risque de crédit bancaire, notamment via des scénarios climatiques (NGFS) appliqués aux portefeuilles de prêts. Le Cambridge Institute for Sustainability Leadership propose depuis 2026 un cadre de « Resilience-Adjusted Credit Risk » visant à intégrer explicitement les investissements d'adaptation d'un emprunteur dans l'évaluation de son risque de crédit — reconnaissant qu'un emprunteur qui investit dans l'adaptation devrait, toutes choses égales par ailleurs, présenter un risque physique réduit.</p>
+      <div class="article-callout">
+        <strong>Le manque identifié par le projet de thèse :</strong> l'ampleur du déficit de financement de l'adaptation (187-359 Md$/an selon l'UNEP FI, Adaptation Gap Report 2024) suggère que les marchés de crédit ne financent pas spontanément l'adaptation au rythme nécessaire. Reste à savoir si cela reflète un problème de rentabilité perçue, d'horizon temporel, ou simplement de profondeur insuffisante du système financier dans les pays les plus exposés — une question testée ici de façon macro, faute de données de prêts bancaires individuels en accès libre.
+      </div>
+
+      <h2>Le test : la profondeur financière comme facteur d'absorption</h2>
+      <p>Sur le même panel de 20 pays que les deux premiers volets, trois variables ont été construites à partir de la Banque mondiale :</p>
+      <ul class="article-checklist">
+        <li><strong>Exposition climatique physique</strong> (0-100), identique aux deux volets précédents.</li>
+        <li><strong>Profondeur du système financier</strong> : crédit privé intérieur accordé par les banques, en % du PIB — un proxy classique de la capacité d'un système financier à mobiliser du capital, y compris pour financer l'adaptation.</li>
+        <li><strong>Coût budgétaire de la dette</strong> : part des recettes publiques absorbée par le paiement des intérêts, identique au premier volet.</li>
+      </ul>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Profondeur du système financier (crédit privé, % du PIB)</p>
+        <ul class="article-chart-bars">
+          <li><span class="chart-label">Chine</span><span class="chart-track"><span class="chart-bar" style="width: 100%;"></span></span><span class="chart-value">194,3</span></li>
+          <li><span class="chart-label">Royaume-Uni</span><span class="chart-track"><span class="chart-bar" style="width: 58%;"></span></span><span class="chart-value">112,3</span></li>
+          <li><span class="chart-label">France</span><span class="chart-track"><span class="chart-bar" style="width: 53%;"></span></span><span class="chart-value">103,9</span></li>
+          <li><span class="chart-label">Allemagne</span><span class="chart-track"><span class="chart-bar" style="width: 39%;"></span></span><span class="chart-value">76,4</span></li>
+          <li><span class="chart-label">Brésil</span><span class="chart-track"><span class="chart-bar" style="width: 39%;"></span></span><span class="chart-value">75,1</span></li>
+          <li><span class="chart-label">Roumanie</span><span class="chart-track"><span class="chart-bar" style="width: 11%;"></span></span><span class="chart-value">22,1</span></li>
+        </ul>
+        <p class="article-chart-source muted">Banque mondiale, FD.AST.PRVT.GD.ZS, dernière année disponible par pays.</p>
+      </div>
+
+      <h2>Les 19 pays du panel</h2>
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr><th>Pays</th><th>Exposition climatique</th><th>Crédit privé (% PIB)</th><th>Intérêts (% recettes)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chine</td><td>72,7</td><td>194,3</td><td>3,4</td></tr>
+            <tr><td>Bangladesh</td><td>68,4</td><td>34,4</td><td>20,8</td></tr>
+            <tr><td>Philippines</td><td>55,0</td><td>52,1</td><td>17,3</td></tr>
+            <tr><td>Kenya</td><td>41,7</td><td>29,7</td><td>24,3</td></tr>
+            <tr><td>Inde</td><td>35,5</td><td>44,0</td><td>34,0</td></tr>
+            <tr><td>Espagne</td><td>23,0</td><td>72,4</td><td>6,5</td></tr>
+            <tr><td>Italie</td><td>17,5</td><td>59,2</td><td>9,4</td></tr>
+            <tr><td>Arabie saoudite</td><td>14,6</td><td>64,3</td><td>3,5</td></tr>
+            <tr><td>Brésil</td><td>12,8</td><td>75,1</td><td>30,1</td></tr>
+            <tr><td>Royaume-Uni</td><td>12,5</td><td>112,3</td><td>8,3</td></tr>
+            <tr><td>Turquie</td><td>12,4</td><td>36,9</td><td>11,7</td></tr>
+            <tr><td>Afrique du Sud</td><td>11,3</td><td>59,2</td><td>18,2</td></tr>
+            <tr><td>États-Unis</td><td>9,9</td><td>44,5</td><td>20,3</td></tr>
+            <tr><td>France</td><td>9,1</td><td>103,9</td><td>4,2</td></tr>
+            <tr><td>Allemagne</td><td>8,8</td><td>76,4</td><td>2,5</td></tr>
+            <tr><td>Pologne</td><td>6,9</td><td>33,6</td><td>5,2</td></tr>
+            <tr><td>Maroc</td><td>6,5</td><td>53,5</td><td>8,0</td></tr>
+            <tr><td>Mexique</td><td>5,0</td><td>27,1</td><td>20,0</td></tr>
+            <tr><td>Roumanie</td><td>1,1</td><td>22,1</td><td>7,3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Le Canada est exclu de ce volet : la donnée de crédit privé la plus récente n'était pas disponible sur la fenêtre retenue.</p>
+
+      <h2>Le résultat : un effet directionnel, non significatif</h2>
+      <blockquote class="article-quote">
+        "La profondeur financière ne supprime pas le risque climatique — mais elle semble en changer la traduction budgétaire."
+      </blockquote>
+      <p>Sur l'ensemble du panel de 19 pays, exposition climatique et coût de la dette sont faiblement corrélés (r = 0,22, p = 0,37). En séparant le panel en deux groupes selon la médiane de profondeur financière :</p>
+      <ul class="article-checklist">
+        <li><strong>Systèmes financiers profonds</strong> (Allemagne, Arabie saoudite, Afrique du Sud, Chine, Espagne, France, Royaume-Uni, Italie, Brésil, Maroc) : r = -0,24 (p = 0,51) — <strong>aucune relation</strong>, et même un signe légèrement négatif, entre exposition climatique et coût de la dette.</li>
+        <li><strong>Systèmes financiers superficiels</strong> (Inde, Mexique, États-Unis, Roumanie, Bangladesh, Kenya, Turquie, Pologne, Philippines) : r = 0,50 (p = 0,17) — une relation <strong>positive et deux fois plus marquée</strong>, bien que non significative sur 9 observations.</li>
+      </ul>
+      <p>Le motif observé est cohérent, une nouvelle fois, avec l'hypothèse du projet de thèse : dans les pays où le système financier est profond, l'exposition climatique ne se traduit pas (ou plus) en surcoût budgétaire de la dette — un signe possible que ces économies parviennent à financer et amortir le risque climatique par d'autres canaux (marchés obligataires domestiques profonds, assurance, épargne privée mobilisable). Dans les pays où le système financier est superficiel, en revanche, l'exposition climatique semble se retrouver plus directement dans le coût de la dette publique, faute d'intermédiaires financiers assez développés pour absorber le choc autrement. Comme dans les deux volets précédents, cette différence reste directionnelle et non démontrée statistiquement sur un échantillon aussi restreint.</p>
+
+      <div class="article-grid-2col">
+        <div>
+          <h3>États-Unis, un contre-exemple révélateur</h3>
+          <p>Les États-Unis (exposition 9,9, crédit privé 44,5 % du PIB — sous la médiane, donc classés « superficiels » dans ce test) affichent un coût de la dette élevé (20,3 % des recettes), malgré une exposition climatique faible. Ce cas rappelle que le coût de la dette dépend de nombreux facteurs macro-budgétaires (niveau d'endettement total, taux d'intérêt directeurs, structure de la dette) bien au-delà du seul climat — la corrélation testée ici isole un facteur parmi d'autres, elle n'explique pas la totalité de la variance.</p>
+        </div>
+        <div>
+          <h3>Chine, à nouveau à part</h3>
+          <p>La Chine cumule la plus forte exposition climatique du panel (72,7) et le système financier le plus profond (194,3 % du PIB) — avec le coût de la dette le plus bas (3,4 %). Comme dans le premier volet (où elle affichait aussi la plus forte capacité d'adaptation), la Chine illustre le pôle « exposé mais doté d'une forte capacité d'absorption financière », cohérent avec l'absence de relation observée dans le sous-groupe « profond ».</p>
+        </div>
+      </div>
+
+      <h2>Limites du test</h2>
+      <ul class="article-checklist">
+        <li>Le crédit privé au PIB mesure la taille du système financier, pas sa capacité spécifique à financer des projets d'adaptation climatique (digues, infrastructures résilientes, assurance paramétrique) — une distinction centrale du cadre « Resilience-Adjusted Credit Risk » évoqué plus haut, non observable avec cette variable.</li>
+        <li>9 et 10 observations par sous-groupe limitent fortement la puissance statistique : aucune des deux corrélations n'est significative au seuil conventionnel de 5 %.</li>
+        <li>Le coût de la dette (intérêts / recettes) reste un proxy budgétaire réalisé, pas une mesure de risque de crédit anticipé par les prêteurs.</li>
+        <li>Aucun contrôle n'est appliqué pour le niveau de revenu, la structure de la dette ou le régime de change, qui influencent tous fortement le coût de la dette indépendamment du climat.</li>
+      </ul>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>Sur l'ensemble du panel, exposition climatique et coût de la dette sont faiblement corrélés (r=0,22, non significatif).</li>
+        <li>Dans les pays à système financier profond, cette relation disparaît presque (r=-0,24) ; dans les pays à système financier superficiel, elle est positive et deux fois plus marquée (r=0,50) — une direction cohérente avec l'hypothèse du projet de thèse, non confirmée statistiquement sur un si petit échantillon.</li>
+        <li>La Chine illustre le cas « exposé mais absorbé » : exposition maximale, système financier le plus profond, coût de la dette le plus bas du panel — un motif déjà observé dans le premier volet via la capacité d'adaptation publique.</li>
+        <li>Les trois volets de cette série convergent vers un même constat : l'exposition climatique brute prédit peu de choses seule ; c'est la capacité d'absorption — publique (volet 1), commerciale (volet 2) ou financière (volet 3) — qui semble faire la différence, sans qu'aucun de ces trois tests macro n'atteigne la significativité statistique sur des échantillons de 20 pays ou moins.</li>
+      </ul>
+
+      <h2>Sources et méthode</h2>
+      <ul class="article-checklist">
+        <li>Banque mondiale, <em>World Development Indicators</em> : exposition climatique (<code>EN.POP.EL5M.ZS</code>, <code>EN.CLC.MDAT.ZS</code>), profondeur financière (<code>FD.AST.PRVT.GD.ZS</code>), coût de la dette (<code>GC.XPN.INTP.RV.ZS</code>).</li>
+        <li>Corrélations de Pearson calculées avec <code>scipy.stats.pearsonr</code>, panel de 19 pays scindé en deux sous-groupes par la médiane de profondeur financière.</li>
+        <li>Références académiques citées : Bolton &amp; Kacperczyk (2021, 2023) ; BCE (2024) ; Pozdyshev, Lobanov &amp; Ilinsky (2025, BRI) ; UNEP FI, <em>Adaptation Gap Report</em> (2024) ; Cambridge Institute for Sustainability Leadership (2026), cadre « Resilience-Adjusted Credit Risk ».</li>
+        <li>Script complet de collecte et de calcul disponible en téléchargement en haut de cette note.</li>
+      </ul>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Ffinancement-adaptation-climatique.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Ffinancement-adaptation-climatique.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Cette série en 3 volets :</p>
+        <ul>
+          <li><a class="text-link" href="risque-souverain-climatique-adaptation.html">Volet 1/3 — Risque souverain climatique : l'adaptation publique change-t-elle la donne ?</a></li>
+          <li><a class="text-link" href="chaines-valeur-climat.html">Volet 2/3 — Chaînes de valeur face au risque climatique : une illustration macro</a></li>
+          <li><a class="text-link" href="dette-souveraine-climat.html">Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

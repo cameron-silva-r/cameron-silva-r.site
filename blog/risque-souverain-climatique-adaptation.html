@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - Risque souverain climatique et adaptation publique">
+  <title>Risque souverain climatique et adaptation publique | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Risque souverain climatique : l'adaptation publique change-t-elle la donne ?">
+  <meta property="og:description" content="Les marchés et les budgets font-ils une différence entre un pays exposé et adapté et un pays exposé et non adapté au risque climatique ? Première partie d'une série en 3 volets sur l'économie de l'adaptation.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/risque-souverain-climatique-adaptation.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Risque souverain climatique et adaptation publique">
+  <meta name="twitter:description" content="Les marchés et les budgets font-ils une différence entre un pays exposé et adapté et un pays exposé et non adapté au risque climatique ?">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/risque-souverain-climatique-adaptation.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Risque souverain climatique : l'adaptation publique change-t-elle la donne ?",
+    "datePublished": "2026-08-18",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/risque-souverain-climatique-adaptation.html",
+    "description": "Les marchés et les budgets font-ils une différence entre un pays exposé et adapté et un pays exposé et non adapté au risque climatique ?",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 18 Aoû 2026 · 12 min de lecture · Volet 1/3</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">risque climatique</span>
+            <span class="article-tag">risque souverain</span>
+            <span class="article-tag">adaptation</span>
+          </div>
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import statistics
+import requests
+from scipy import stats
+
+EXPOSURE_INDICATORS = ["EN.POP.EL5M.ZS", "EN.CLC.MDAT.ZS"]
+ADAPTATION_INDICATORS = ["FI.RES.TOTL.MO", "GOV_WGI_GE.EST"]
+COST_INDICATOR = "GC.XPN.INTP.RV.ZS"  # interets payes, % des recettes publiques
+
+# On separe le panel en deux groupes selon la capacite d'adaptation
+# (reserves de change + efficacite gouvernementale), puis on recalcule
+# la correlation exposition / cout de la dette dans chaque groupe.
+mediane_adapt = statistics.median(adaptation[k] for k in communs)
+forte = [k for k in communs if adaptation[k] >= mediane_adapt]
+faible = [k for k in communs if adaptation[k] < mediane_adapt]
+
+r_forte, p_forte = stats.pearsonr(
+    [exposition[k] for k in forte], [cout_dette[k] for k in forte])
+r_faible, p_faible = stats.pearsonr(
+    [exposition[k] for k in faible], [cout_dette[k] for k in faible])</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/risque-souverain-climatique-adaptation.py" download>Télécharger le script complet (.py)</a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <h1>Risque souverain climatique : l'adaptation publique change-t-elle la donne ?</h1>
+      <p class="lead">Deux pays peuvent être exposés de façon comparable aux catastrophes climatiques et pourtant présenter un risque budgétaire très différent — si l'un a construit des digues, un système d'assurance et des réserves, quand l'autre absorbe chaque choc par de la dette nouvelle. C'est la question centrale d'un projet de recherche doctorale sur l'économie de l'adaptation climatique, que cette note utilise comme point de départ pour une série en trois volets, chacun testé avec des données publiques réelles.</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : risque souverain et adaptation climatique" width="1200" height="700" loading="lazy">
+        <figcaption>De l'exposition physique au risque financier : le rôle de l'adaptation publique reste le maillon le moins documenté empiriquement.</figcaption>
+      </figure>
+
+      <h2>Un projet de recherche en trois volets : de l'exposition à l'adaptation</h2>
+      <p>La littérature sur climat et finance s'est d'abord structurée autour du <strong>risque de transition</strong> — la tarification du carbone, l'alignement des portefeuilles, la décarbonation — pendant que l'<strong>adaptation aux risques physiques</strong> restait moins stabilisée empiriquement. Un projet de thèse récent propose de déplacer la question : non plus seulement « qui est exposé au risque climatique ? », mais <strong>« qui s'adapte, comment, avec quel financement, et avec quels effets sur le risque économique et financier ? »</strong>. L'adaptation y est définie comme l'ensemble des investissements, politiques publiques et instruments financiers qui réduisent la vulnérabilité aux risques physiques déjà présents ou anticipés — par opposition à la mitigation, qui vise à réduire les émissions.</p>
+      <p>Le projet se décline en trois papiers complémentaires, à trois échelles : l'État (l'adaptation publique réduit-elle le risque souverain ?), l'entreprise (l'adaptation des chaînes de valeur réduit-elle la vulnérabilité économique ?), et la finance (le financement de l'adaptation réduit-il le risque de crédit ?). Cette note et les deux suivantes reprennent chacune l'une de ces trois questions et la testent avec des données macroéconomiques publiques — une illustration accessible, pas une réplication des études académiques citées, qui reposent souvent sur des données propriétaires (spreads obligataires, prêts bancaires, relations fournisseur-client géolocalisées) non disponibles gratuitement.</p>
+
+      <div class="article-callout">
+        <strong>Ce que dit déjà la littérature :</strong> Cevik &amp; Jalles (2020), sur 98 pays entre 1995 et 2017, montrent que la vulnérabilité climatique est associée à des rendements et spreads souverains plus élevés, tandis que la résilience climatique est associée à des coûts d'emprunt plus faibles — un effet plus marqué dans les pays en développement. Anyfantaki et al. (2025, BIS) distinguent risque de transition, risque physique chronique et catastrophes météorologiques aigües : ces dernières augmentent les rendements souverains surtout quand l'espace budgétaire est limité. La BCE (Fahr et al., 2023) souligne que le climat pèse sur les finances publiques via les coûts de reconstruction, la baisse des recettes fiscales, les aides d'urgence et le rôle de l'État comme assureur en dernier ressort — et que seule une fraction des pertes climatiques est assurée, ce qui transfère le choc vers la dette publique.
+      </div>
+
+      <h2>Tester l'hypothèse avec des données ouvertes</h2>
+      <p>Le manque identifié par ce projet de thèse n'est plus l'existence d'un lien entre climat et risque souverain — il est aujourd'hui documenté — mais le rôle précis de l'<em>adaptation publique</em> : deux pays également exposés peuvent avoir des risques souverains très différents selon qu'ils disposent d'infrastructures de protection, d'un système d'assurance et de marges budgétaires, ou qu'ils absorbent les pertes ex post par l'endettement.</p>
+      <p>Faute de données de marché obligataire ou de spreads souverains en accès libre, cette illustration utilise trois éléments construits à partir de la Banque mondiale, sur un panel de 20 pays choisis pour couvrir un large spectre d'exposition climatique et de niveau de développement (France, Allemagne, Espagne, Italie, Pologne, Roumanie, Royaume-Uni, Maroc, Afrique du Sud, Turquie, Arabie saoudite, Chine, Inde, États-Unis, Brésil, Mexique, Canada, Bangladesh, Philippines, Kenya) :</p>
+      <ul class="article-checklist">
+        <li><strong>Exposition climatique physique</strong> (0-100) : moyenne normalisée de la population en zone de très basse altitude et de la population historiquement exposée aux sécheresses, inondations et températures extrêmes.</li>
+        <li><strong>Capacité d'adaptation publique</strong> (0-100) : moyenne normalisée des réserves de change (en mois d'importations) et de l'indice d'efficacité gouvernementale de la Banque mondiale — deux proxys de la marge de manœuvre budgétaire et institutionnelle pour absorber un choc.</li>
+        <li><strong>Coût budgétaire de la dette</strong> : part des recettes publiques absorbée par le paiement des intérêts, un proxy réalisé (et non anticipé par les marchés) du risque souverain.</li>
+      </ul>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Exposition climatique physique (0-100), pays les plus exposés du panel</p>
+        <ul class="article-chart-bars">
+          <li><span class="chart-label">Chine</span><span class="chart-track"><span class="chart-bar" style="width: 100%;"></span></span><span class="chart-value">72,7</span></li>
+          <li><span class="chart-label">Bangladesh</span><span class="chart-track"><span class="chart-bar" style="width: 94%;"></span></span><span class="chart-value">68,4</span></li>
+          <li><span class="chart-label">Philippines</span><span class="chart-track"><span class="chart-bar" style="width: 76%;"></span></span><span class="chart-value">55,0</span></li>
+          <li><span class="chart-label">Kenya</span><span class="chart-track"><span class="chart-bar" style="width: 57%;"></span></span><span class="chart-value">41,7</span></li>
+          <li><span class="chart-label">Inde</span><span class="chart-track"><span class="chart-bar" style="width: 49%;"></span></span><span class="chart-value">35,5</span></li>
+        </ul>
+        <p class="article-chart-source muted">Calcul personnel, Banque mondiale (EN.POP.EL5M.ZS, EN.CLC.MDAT.ZS).</p>
+      </div>
+
+      <h2>Les 20 pays du panel</h2>
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr><th>Pays</th><th>Exposition climatique</th><th>Adaptation publique</th><th>Intérêts (% recettes)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chine</td><td>72,7</td><td>69,0</td><td>3,4</td></tr>
+            <tr><td>Bangladesh</td><td>68,4</td><td>8,9</td><td>20,8</td></tr>
+            <tr><td>Philippines</td><td>55,0</td><td>37,0</td><td>17,3</td></tr>
+            <tr><td>Kenya</td><td>41,7</td><td>16,0</td><td>24,3</td></tr>
+            <tr><td>Inde</td><td>35,5</td><td>44,4</td><td>34,0</td></tr>
+            <tr><td>Espagne</td><td>23,0</td><td>38,6</td><td>6,5</td></tr>
+            <tr><td>Italie</td><td>17,5</td><td>44,7</td><td>9,4</td></tr>
+            <tr><td>Arabie saoudite</td><td>14,6</td><td>79,5</td><td>3,5</td></tr>
+            <tr><td>Brésil</td><td>12,8</td><td>33,1</td><td>30,1</td></tr>
+            <tr><td>Royaume-Uni</td><td>12,5</td><td>37,9</td><td>8,3</td></tr>
+            <tr><td>Turquie</td><td>12,4</td><td>23,3</td><td>11,7</td></tr>
+            <tr><td>Afrique du Sud</td><td>11,3</td><td>25,3</td><td>18,2</td></tr>
+            <tr><td>États-Unis</td><td>9,9</td><td>46,7</td><td>20,3</td></tr>
+            <tr><td>France</td><td>9,1</td><td>45,5</td><td>4,2</td></tr>
+            <tr><td>Allemagne</td><td>8,8</td><td>51,6</td><td>2,5</td></tr>
+            <tr><td>Pologne</td><td>6,9</td><td>42,9</td><td>5,2</td></tr>
+            <tr><td>Maroc</td><td>6,5</td><td>32,7</td><td>8,0</td></tr>
+            <tr><td>Canada</td><td>6,0</td><td>50,7</td><td>8,4</td></tr>
+            <tr><td>Mexique</td><td>5,0</td><td>16,7</td><td>20,0</td></tr>
+            <tr><td>Roumanie</td><td>1,1</td><td>36,4</td><td>7,3</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Le test : séparer les pays adaptés des pays non adaptés</h2>
+      <blockquote class="article-quote">
+        "La question n'est pas de savoir si un pays est exposé, mais si les marchés et les budgets distinguent les pays exposés-et-adaptés des pays exposés-et-non-adaptés."
+      </blockquote>
+      <p>Sur l'ensemble du panel, la corrélation entre exposition climatique et coût budgétaire de la dette est faible et non significative (r = 0,23, p = 0,32). Mais en séparant le panel en deux groupes selon la médiane de capacité d'adaptation, un motif cohérent avec l'hypothèse du projet de thèse apparaît :</p>
+      <ul class="article-checklist">
+        <li><strong>Pays à forte capacité d'adaptation</strong> (Arabie saoudite, France, États-Unis, Inde, Chine, Canada, Pologne, Italie, Espagne, Allemagne) : r = 0,10 (p = 0,78) — <strong>quasiment aucune relation</strong> entre exposition climatique et coût de la dette.</li>
+        <li><strong>Pays à faible capacité d'adaptation</strong> (Philippines, Bangladesh, Brésil, Royaume-Uni, Turquie, Mexique, Maroc, Roumanie, Kenya, Afrique du Sud) : r = 0,39 (p = 0,27) — une relation <strong>presque quatre fois plus forte</strong>, bien que non significative sur seulement 10 observations.</li>
+      </ul>
+      <p>Le résultat va dans le sens de l'hypothèse centrale du premier papier de la thèse : l'exposition climatique semble peser davantage sur le coût de la dette publique lorsque la capacité d'adaptation est faible. Mais avec deux sous-groupes de 10 pays chacun, aucune des deux corrélations n'atteint la significativité statistique conventionnelle — un résultat à interpréter comme une piste cohérente avec la littérature, pas comme une preuve.</p>
+
+      <div class="article-grid-2col">
+        <div>
+          <h3>Le cas de la Chine</h3>
+          <p>La Chine illustre bien la logique testée ici : exposition climatique la plus élevée du panel (72,7), mais capacité d'adaptation également très élevée (69,0, portée par des réserves de change considérables) — et un coût de la dette parmi les plus faibles du panel (3,4 % des recettes). L'exposition brute ne suffit pas à prédire le risque budgétaire sans tenir compte de la capacité d'absorption.</p>
+        </div>
+        <div>
+          <h3>Le cas du Bangladesh</h3>
+          <p>À l'inverse, le Bangladesh combine une exposition très élevée (68,4) et une capacité d'adaptation très faible (8,9, la plus basse du panel) — avec un coût de la dette nettement supérieur à la moyenne (20,8 % des recettes). C'est exactement la configuration « exposé et non adapté » que la littérature identifie comme la plus vulnérable.</p>
+        </div>
+      </div>
+
+      <h2>Limites du test</h2>
+      <ul class="article-checklist">
+        <li>Le coût de la dette utilisé ici (intérêts / recettes) est un proxy budgétaire réalisé, pas un spread de marché anticipé par les investisseurs — les deux peuvent diverger, notamment pour les pays qui financent une large part de leur dette à taux concessionnels ou en monnaie domestique.</li>
+        <li>Deux sous-échantillons de 10 pays chacun limitent fortement la puissance statistique : la différence entre r=0,10 et r=0,39 est suggestive, pas démontrée.</li>
+        <li>La capacité d'adaptation publique est ici approximée par des variables macro générales (réserves, efficacité gouvernementale), pas par des mesures directes de politiques d'adaptation (digues, plans nationaux, mécanismes d'assurance publique-privée) comme le préconise le projet de thèse original.</li>
+        <li>Aucune stratégie d'identification causale (event study autour de catastrophes réelles) n'est mise en œuvre ici : il s'agit d'une coupe transversale récente, pas d'un panel dynamique.</li>
+      </ul>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>Sur l'ensemble du panel, exposition climatique et coût de la dette ne sont pas significativement corrélés.</li>
+        <li>Mais la relation est presque quatre fois plus forte chez les pays à faible capacité d'adaptation (r=0,39) que chez ceux à forte capacité (r=0,10) — une direction cohérente avec la littérature académique citée, non confirmée statistiquement sur ce petit échantillon.</li>
+        <li>Chine et Bangladesh illustrent les deux pôles : exposition élevée + forte adaptation (coût de la dette faible) contre exposition élevée + faible adaptation (coût de la dette élevé).</li>
+        <li>Un test rigoureux de cette hypothèse demanderait des données de spreads souverains et des mesures directes de politiques d'adaptation, non disponibles via des API publiques gratuites — c'est précisément le travail empirique que propose le projet de thèse.</li>
+      </ul>
+
+      <h2>Sources et méthode</h2>
+      <ul class="article-checklist">
+        <li>Banque mondiale, <em>World Development Indicators</em> : exposition climatique (<code>EN.POP.EL5M.ZS</code>, <code>EN.CLC.MDAT.ZS</code>), réserves de change (<code>FI.RES.TOTL.MO</code>), coût de la dette (<code>GC.XPN.INTP.RV.ZS</code>).</li>
+        <li>Banque mondiale, <em>Worldwide Governance Indicators</em> : efficacité gouvernementale (<code>GOV_WGI_GE.EST</code>).</li>
+        <li>Corrélations de Pearson calculées avec <code>scipy.stats.pearsonr</code>, panel de 20 pays scindé en deux sous-groupes de 10 par la médiane de capacité d'adaptation.</li>
+        <li>Références académiques citées : Cevik &amp; Jalles (2020) ; Anyfantaki et al. (2025, BIS) ; Fahr et al. (2023, BCE) ; NGFS (scénarios climatiques) ; UNEP FI (Adaptation Gap Report).</li>
+        <li>Script complet de collecte et de calcul disponible en téléchargement en haut de cette note.</li>
+      </ul>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Frisque-souverain-climatique-adaptation.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Frisque-souverain-climatique-adaptation.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Suite de cette série :</p>
+        <ul>
+          <li><a class="text-link" href="chaines-valeur-climat.html">Volet 2/3 — Chaînes de valeur face au risque climatique : une illustration macro</a></li>
+          <li><a class="text-link" href="financement-adaptation-climatique.html">Volet 3/3 — Financer l'adaptation climatique : ce que suggèrent les données macro</a></li>
+          <li><a class="text-link" href="dette-souveraine-climat.html">Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

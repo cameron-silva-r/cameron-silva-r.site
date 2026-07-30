@@ -556,6 +556,13 @@ h1 {
   flex-wrap: wrap;
 }
 
+.article-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .article-tag {
   font-size: 0.8rem;
   border: 1px solid #b9cde5;
@@ -677,52 +684,79 @@ h1 {
   margin-top: 0.3rem;
 }
 
-.article-code {
-  margin-top: 0.9rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--stroke);
+.article-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.code-details {
-  margin: 0.6rem 0;
-  border: 1px solid var(--stroke);
-  border-radius: 12px;
-  background: #fff;
-  overflow: hidden;
+.code-toggle {
+  position: relative;
 }
 
-.code-details summary {
+.code-toggle summary {
   cursor: pointer;
-  padding: 0.6rem 0.9rem;
-  font-weight: 700;
   list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  white-space: nowrap;
 }
 
-.code-details summary::-webkit-details-marker {
+.code-toggle summary::-webkit-details-marker {
   display: none;
 }
 
-.code-details summary::before {
-  content: "▸ ";
+.code-toggle summary::before {
+  content: "</> ";
 }
 
-.code-details[open] summary::before {
-  content: "▾ ";
+.code-toggle summary:hover,
+.code-toggle summary:focus-visible {
+  background: #eef3fa;
 }
 
-.code-details pre {
-  margin: 0;
-  padding: 0.9rem;
+.code-toggle .code-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 20;
+  width: min(420px, 86vw);
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 0.85rem;
+}
+
+.code-panel pre {
+  margin: 0 0 0.7rem;
+  padding: 0.75rem;
   overflow-x: auto;
   background: #f4f6fa;
-  border-top: 1px solid var(--stroke);
+  border-radius: 8px;
+  border: 1px solid var(--stroke);
 }
 
-.code-details code {
+.code-panel code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #1a2430;
   white-space: pre;
+}
+
+.code-panel .btn {
+  width: 100%;
+  justify-content: center;
 }
 
 .text-link {
@@ -925,7 +959,7 @@ h1 {
   .keyword-filters,
   .article-pager,
   .article-share,
-  .article-code,
+  .code-toggle,
   .btn {
     display: none !important;
   }

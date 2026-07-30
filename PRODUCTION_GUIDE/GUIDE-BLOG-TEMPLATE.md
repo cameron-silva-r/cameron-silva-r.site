@@ -102,13 +102,14 @@ chacun d'eux avant de publier une nouvelle note:
 
 ## 10) Transparence du code (pour les notes avec analyse de donnees)
 
-Pour une note qui presente le resultat d'un script (Python/R), le template inclut une section
-`.article-code` optionnelle, a garder uniquement si tu as un vrai script a montrer:
+Pour une note qui presente le resultat d'un script (Python/R), le template inclut un petit bouton
+optionnel "Voir le code" (`.code-toggle`) en haut de l'article, a cote des mots-cles, a garder
+uniquement si tu as un vrai script a montrer:
 
 1. Place ton script dans `assets/code/` (ex: `assets/code/mon-analyse.py`).
 2. Colle le vrai code dans le bloc `<pre><code>` du template (echappe `<` et `>` en `&lt;`/`&gt;`
    s'il y en a dans le code, par exemple pour des comparaisons).
-3. Le bloc `<details>` affiche/masque le code au clic, sans JavaScript.
+3. Le bloc `<details class="code-toggle">` affiche/masque le code au clic, sans JavaScript.
 4. Adapte le `href` du bouton "Telecharger le script" vers ton fichier dans `assets/code/`.
-5. Si la note n'a pas de code a montrer, supprime toute la section `<section class="article-code">`.
+5. Si la note n'a pas de code a montrer, supprime tout le bloc `<details class="code-toggle">`.
 

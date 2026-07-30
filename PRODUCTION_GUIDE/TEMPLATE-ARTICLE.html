@@ -33,9 +33,10 @@ TEMPLATE ARTICLE BLOG - MODE D'EMPLOI (COMMENTAIRES NON VISIBLES SUR LE SITE)
 - Tableau
 - Checklist
 - Images intermediaires + legendes
-- Transparence du code (bouton "Afficher le code" + lien de telechargement du script)
+- Transparence du code (petit bouton "</> Voir le code" en haut de l'article, a cote des mots-cles)
   -> mets ton fichier .py/.R dans /assets/code/ et colle le code reel dans le bloc <pre><code>
   -> pense a echapper les caracteres < et > du code avec &lt; et &gt; si tu en as
+  -> si la note n'a pas de code a montrer, supprime tout le bloc <details class="code-toggle">
 
 5) AJOUTER L'ARTICLE DANS blog.html
 - Ajouter une carte dans #blog-list avec:
@@ -103,10 +104,24 @@ TEMPLATE ARTICLE BLOG - MODE D'EMPLOI (COMMENTAIRES NON VISIBLES SUR LE SITE)
       <!-- 1) METADONNEES DE L'ARTICLE -->
       <div class="article-meta-row">
         <p class="eyebrow">Notes et actualités · 23 Jul 2026 · X min de lecture</p>
-        <div class="article-tags">
-          <span class="article-tag">methodologie</span>
-          <span class="article-tag">donnees</span>
-          <span class="article-tag">publication</span>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">methodologie</span>
+            <span class="article-tag">donnees</span>
+            <span class="article-tag">publication</span>
+          </div>
+          <!-- Transparence du code (optionnel) - supprime tout le <details> si la note n'a pas de script a montrer -->
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import pandas as pd
+
+df = pd.read_csv("donnees.csv")
+resultat = df.groupby("annee")["valeur"].mean()
+print(resultat)</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/NOM-DU-FICHIER.py" download>Télécharger le script (.py)</a>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -198,29 +213,14 @@ TEMPLATE ARTICLE BLOG - MODE D'EMPLOI (COMMENTAIRES NON VISIBLES SUR LE SITE)
       <!-- 12) RETOUR AUX NOTES -->
       <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
 
-      <!-- 13) TRANSPARENCE DU CODE (optionnel) - remplace le code d'exemple et le lien de telechargement -->
-      <section class="article-code">
-        <h2>Transparence du code</h2>
-        <p class="muted">Code utilise pour produire les chiffres et graphiques de cette note.</p>
-        <details class="code-details">
-          <summary>Afficher le code</summary>
-          <pre><code>import pandas as pd
-
-df = pd.read_csv("donnees.csv")
-resultat = df.groupby("annee")["valeur"].mean()
-print(resultat)</code></pre>
-        </details>
-        <p><a class="btn btn-outline" href="../assets/code/NOM-DU-FICHIER.py" download>Telecharger le script (.py)</a></p>
-      </section>
-
-      <!-- 14) PARTAGE - remplace l'URL encodee (https%3A%2F%2Fcameron-silva.fr%2Fblog%2FNOM-DU-FICHIER.html) -->
+      <!-- 13) PARTAGE - remplace l'URL encodee (https%3A%2F%2Fcameron-silva.fr%2Fblog%2FNOM-DU-FICHIER.html) -->
       <div class="article-share" aria-label="Partager cette note">
         <span class="muted">Partager :</span>
         <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2FNOM-DU-FICHIER.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2FNOM-DU-FICHIER.html" target="_blank" rel="noopener noreferrer">X</a>
       </div>
 
-      <!-- 15) NOTES LIEES - remplace par 1-2 articles qui partagent un mot-cle avec celui-ci -->
+      <!-- 14) NOTES LIEES - remplace par 1-2 articles qui partagent un mot-cle avec celui-ci -->
       <nav class="article-related" aria-label="Notes liées">
         <p class="muted">Sur des sujets proches :</p>
         <ul>
@@ -228,7 +228,7 @@ print(resultat)</code></pre>
         </ul>
       </nav>
 
-      <!-- 16) NAVIGATION PRECEDENT/SUIVANT - facultatif, a mettre a jour aussi sur les notes voisines -->
+      <!-- 15) NAVIGATION PRECEDENT/SUIVANT - facultatif, a mettre a jour aussi sur les notes voisines -->
       <nav class="article-pager" aria-label="Navigation entre notes">
         <a class="text-link" href="note-precedente.html">← Note précédente : Titre de la note précédente</a>
         <a class="text-link" href="note-suivante.html">Note suivante : Titre de la note suivante →</a>

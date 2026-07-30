@@ -786,6 +786,43 @@ h1 {
   text-decoration: underline;
 }
 
+.contact-list {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: #fffdf9;
+}
+
+.contact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #e9eef6;
+  color: var(--accent-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.contact-label {
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 5rem;
+}
+
 .page-intro {
   margin-bottom: 1.3rem;
 }
@@ -880,6 +917,15 @@ h1 {
 }
 
 @media (max-width: 900px) {
+  .nav-wrap {
+    gap: 0.5rem;
+  }
+
+  .brand {
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+
   .home-layout {
     grid-template-columns: 1fr;
     align-items: start;
@@ -966,6 +1012,14 @@ h1 {
     max-height: none;
     overflow: visible;
     padding-right: 0;
+  }
+
+  .contact-list li {
+    flex-wrap: wrap;
+  }
+
+  .contact-label {
+    min-width: 0;
   }
 }
 

@@ -78,13 +78,25 @@ href="blog/...">Titre</a></li>` pour que la home reste a jour, dans les 2 langue
 
 ## 9) Bonnes pratiques SEO / partage deja en place a reprendre
 
-Chaque page du site a deja: un favicon (`<link rel="icon" ... href=".../assets/img/favicon.svg">`),
-des balises Open Graph/Twitter Card, et les articles ont un lien `rel="alternate"` vers le flux RSS
-(`rss-fr.xml` / `rss-en.xml`). Pour une nouvelle note, copie ces balises depuis un article existant
-(`blog/deficit-public-et-donnees.html` par exemple) et adapte titre/description/url/date.
+Le template (`PRODUCTION_GUIDE/TEMPLATE-ARTICLE.html`) contient deja tous les blocs ci-dessous
+avec des valeurs a remplacer (`NOM-DU-FICHIER`, dates, titres...). Verifie que tu as bien adapte
+chacun d'eux avant de publier une nouvelle note:
 
-Pense aussi a:
-- Ajouter un temps de lecture estime dans l'eyebrow (`· 3 min de lecture`).
-- Ajouter un lien "note precedente / suivante" (`.article-pager`) en bas de chaque article, et
-  mettre a jour ceux des notes voisines en consequence.
+- Favicon (`<link rel="icon" ...>`) : deja bon, ne change pas.
+- Open Graph / Twitter Card (`og:title`, `og:description`, `og:url`, `twitter:title`,
+  `twitter:description`) : a adapter au titre/description de ta note.
+- `<link rel="canonical">` + les 3 `<link rel="alternate" hreflang="...">` (fr/en/x-default) :
+  remplace l'URL FR et l'URL EN par les vrais chemins de ta note (une fois le miroir EN cree).
+- `<link rel="alternate" type="application/rss+xml">` : deja bon, ne change pas.
+- Le bloc `<script type="application/ld+json">` (JSON-LD `BlogPosting`) : adapte `headline`,
+  `datePublished`, `url`, `description` (`inLanguage` reste `"fr"` ou passe a `"en"` pour le
+  miroir anglais).
+- Le temps de lecture estime dans l'eyebrow (`· X min de lecture`).
+- Les 2 liens de partage LinkedIn/X (`.article-share`) : remplace l'URL encodee par celle de ta
+  note (encode juste `:` en `%3A` et `/` en `%2F`).
+- La section "Notes liees" (`.article-related`) : liste 1-2 autres notes qui partagent un
+  mot-cle avec celle-ci (`data-keywords` dans `blog.html`).
+- Le lien "note precedente / suivante" (`.article-pager`) : facultatif, a mettre a jour aussi sur
+  les notes voisines en consequence.
 - Ajouter la nouvelle note dans `sitemap.xml` et dans `rss-fr.xml`/`rss-en.xml`.
+

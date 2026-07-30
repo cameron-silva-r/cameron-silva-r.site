@@ -9,6 +9,10 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://cameron-silva.fr/projects.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://cameron-silva.fr/blog.html</loc>
     <changefreq>weekly</changefreq>
   </url>
@@ -34,6 +38,10 @@
   </url>
   <url>
     <loc>https://cameron-silva.fr/en/cv.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://cameron-silva.fr/en/projects.html</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>

@@ -98,7 +98,7 @@ chacun d'eux avant de publier une nouvelle note:
   mot-cle avec celle-ci (`data-keywords` dans `blog.html`).
 - Le lien "note precedente / suivante" (`.article-pager`) : facultatif, a mettre a jour aussi sur
   les notes voisines en consequence.
-- Ajouter la nouvelle note dans `sitemap.xml` et dans `rss-fr.xml`/`rss-en.xml`.
+- Ajouter la nouvelle note dans `sitemap.xml`.
 
 ## 10) Transparence du code (pour les notes avec analyse de donnees)
 

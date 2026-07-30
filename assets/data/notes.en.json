@@ -11,5 +11,30 @@
       "Paragraph 1 to customize.",
       "Paragraph 2 to customize."
     ]
+  },
+  {
+    "slug": "sample-note-finance",
+    "date": "2026-07-25",
+    "title": "Sample note — Finance topic (to replace)",
+    "summary": "Example summary for a note tagged Finance: one or two sentences to make readers want to keep reading.",
+    "tags": ["finance"],
+    "image": "blog-placeholder.svg",
+    "body": [
+      "This is a sample first paragraph. Replace this text with your real introduction.",
+      "This is a sample second paragraph, to show what a slightly longer note looks like once published."
+    ]
+  },
+  {
+    "slug": "sample-note-public-policy",
+    "date": "2026-07-28",
+    "title": "Sample note — Public policy topic (to replace)",
+    "summary": "Example summary for a note combining several tags at once, to test how the tag chips display.",
+    "tags": ["international", "publicpolicy"],
+    "image": "blog-placeholder.svg",
+    "body": [
+      "Sample introduction paragraph for this template note.",
+      "You can use admin.html to edit or replace this note (the slug \"sample-note-public-policy\" will show up in the existing notes list)."
+    ]
   }
 ]
+

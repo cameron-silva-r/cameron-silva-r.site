@@ -11,5 +11,30 @@
       "Paragraphe 1 à personnaliser.",
       "Paragraphe 2 à personnaliser."
     ]
+  },
+  {
+    "slug": "modele-note-finance",
+    "date": "2026-07-25",
+    "title": "Modèle de note — thème Finance (à remplacer)",
+    "summary": "Exemple de résumé pour une note classée en Finance : une à deux phrases d'accroche qui donnent envie de lire la suite.",
+    "tags": ["finance"],
+    "image": "blog-placeholder.svg",
+    "body": [
+      "Ceci est un exemple de premier paragraphe. Remplace ce texte par ta véritable introduction.",
+      "Ceci est un exemple de second paragraphe, pour montrer à quoi ressemble une note un peu plus longue une fois publiée."
+    ]
+  },
+  {
+    "slug": "modele-note-politiques-publiques",
+    "date": "2026-07-28",
+    "title": "Modèle de note — thème Politiques publiques (à remplacer)",
+    "summary": "Exemple de résumé pour une note combinant plusieurs thèmes à la fois, afin de tester l'affichage des étiquettes.",
+    "tags": ["international", "politiquespubliques"],
+    "image": "blog-placeholder.svg",
+    "body": [
+      "Exemple de paragraphe d'introduction pour cette note modèle.",
+      "Tu peux utiliser admin.html pour éditer ou remplacer cette note (le slug \"modele-note-politiques-publiques\" apparaîtra dans la liste des notes existantes)."
+    ]
   }
 ]
+

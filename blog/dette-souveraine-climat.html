@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - Dette souveraine et climat">
+  <title>Dette souveraine et climat | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?">
+  <meta property="og:description" content="Les pays les plus exposés au risque climatique physique empruntent-ils vraiment plus cher ? Un test empirique avec des données publiques.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/dette-souveraine-climat.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dette souveraine et climat">
+  <meta name="twitter:description" content="Les pays les plus exposés au risque climatique physique empruntent-ils vraiment plus cher ? Un test empirique avec des données publiques.">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/dette-souveraine-climat.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?",
+    "datePublished": "2026-08-12",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/dette-souveraine-climat.html",
+    "description": "Les pays les plus exposés au risque climatique physique empruntent-ils vraiment plus cher ? Un test empirique avec des données publiques.",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 12 Aoû 2026 · 9 min de lecture</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">climat</span>
+            <span class="article-tag">dette souveraine</span>
+            <span class="article-tag">méthodologie</span>
+          </div>
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import requests
+from scipy import stats
+
+# Indice d'exposition climatique physique : moyenne de 2 indicateurs
+# Banque mondiale normalisés 0-100 (population en zone basse < 5m,
+# exposition historique secheresses/inondations/temperatures extremes)
+INDICATEURS = {
+    "EN.POP.EL5M.ZS": "pop_zone_basse",
+    "EN.CLC.MDAT.ZS": "exposition_historique",
+    "DT.DOD.DECT.GN.ZS": "dette_externe_pib",      # % RNB
+    "DT.TDS.DECT.EX.ZS": "service_dette_export",   # % exportations
+}
+
+def fetch(code, pays):
+    url = (f"https://api.worldbank.org/v2/country/{';'.join(pays)}"
+           f"/indicator/{code}?format=json&per_page=1000&mrv=6")
+    return requests.get(url, timeout=20).json()
+
+# Test : l'exposition climatique est-elle corrélée à la dette exterieure ?
+r_dette, p_dette = stats.pearsonr(exposition, dette_externe_pib)
+r_service, p_service = stats.pearsonr(exposition, service_dette_export)</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/dette-souveraine-climat.py" download>Télécharger le script complet (.py)</a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <h1>Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?</h1>
+      <p class="lead">Le G7, le FMI et le groupe des pays « V20 » le répètent depuis plusieurs années : les pays les plus exposés au changement climatique paieraient plus cher pour emprunter, alors même qu'ils contribuent le moins aux émissions mondiales. C'est une hypothèse testable. Voici ce que montrent des données publiques sur un panel de 18 pays en développement.</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : dette souveraine et vulnérabilité climatique" width="1200" height="700" loading="lazy">
+        <figcaption>Exposition climatique physique et fardeau de la dette extérieure : deux dimensions rarement croisées avec des données ouvertes.</figcaption>
+      </figure>
+
+      <h2>Une hypothèse largement défendue par les institutions</h2>
+      <p>L'idée d'un « risque climatique déjà intégré dans le prix de la dette souveraine » est au cœur du plaidoyer des pays vulnérables depuis la COP26 : si les marchés anticipent des dégâts climatiques futurs (ouragans, sécheresses, montée des eaux) et une moindre capacité de remboursement qui en résulterait, ils devraient exiger une prime de risque plus élevée dès aujourd'hui, indépendamment du niveau de richesse ou de la qualité des institutions du pays. C'est notamment l'argument central d'un rapport influent d'Imperial College London et de la SOAS (2021), qui chiffrait un surcoût d'emprunt pour les pays vulnérables. C'est aussi la justification derrière la création par le FMI, en 2022, du Resilience and Sustainability Trust, un guichet de financement à long terme dédié aux chocs climatiques et pandémiques, et derrière la multiplication des échanges « dette contre nature » (Belize, Équateur, Gabon) qui restructurent une partie de la dette externe contre des engagements de conservation.</p>
+
+      <div class="article-callout">
+        <strong>Point clé :</strong> l'existence d'une « prime climatique » est documentée dans des études économétriques avec de nombreuses variables de contrôle. Reste à savoir si un simple croisement de données publiques, sans contrôle, permet déjà de l'observer.
+      </div>
+
+      <h2>Construire un indice d'exposition climatique avec des données ouvertes</h2>
+      <p>Le panel retenu regroupe 18 pays en développement et émergents suivis par le système de notification de la dette extérieure de la Banque mondiale (Debtor Reporting System) : petits États insulaires (Maldives, Vanuatu, Fidji), Asie du Sud et du Sud-Est (Bangladesh, Vietnam, Philippines, Pakistan, Indonésie, Inde), Afrique (Mozambique, Kenya, Nigeria, Maroc, Afrique du Sud, Égypte) et Amérique latine (Argentine, Brésil), plus la Turquie. Les grandes économies avancées (France, Allemagne, Japon, États-Unis) sont volontairement exclues de ce panel : elles ne sont pas suivies par ce système de notification de la dette extérieure, et la « prime climatique » est un enjeu spécifique aux pays en développement, qui n'ont pas toujours accès aux mêmes instruments de couverture.</p>
+      <p>L'exposition climatique physique est mesurée par la moyenne de deux indicateurs de la Banque mondiale, normalisés sur une échelle 0-100 : la part de la population vivant en zone de très basse altitude (moins de 5 mètres, un proxy pour le risque de submersion et de montée des eaux) et la part de la population historiquement exposée aux sécheresses, inondations et températures extrêmes (moyenne 1990-2009). Le fardeau de la dette est mesuré par deux indicateurs distincts : le stock de dette extérieure rapporté au revenu national brut, et le service de la dette (intérêts + principal) rapporté aux recettes d'exportation, qui reflète mieux la pression de trésorerie réelle que le stock brut.</p>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Indice d'exposition climatique physique (0-100), pays les plus exposés du panel</p>
+        <ul class="article-chart-bars">
+          <li>
+            <span class="chart-label">Kenya</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 100%;"></span></span>
+            <span class="chart-value">50,2</span>
+          </li>
+          <li>
+            <span class="chart-label">Maldives</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 99.8%;"></span></span>
+            <span class="chart-value">50,1</span>
+          </li>
+          <li>
+            <span class="chart-label">Bangladesh</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 87%;"></span></span>
+            <span class="chart-value">43,7</span>
+          </li>
+          <li>
+            <span class="chart-label">Vietnam</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 84%;"></span></span>
+            <span class="chart-value">42,4</span>
+          </li>
+          <li>
+            <span class="chart-label">Inde</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 70%;"></span></span>
+            <span class="chart-value">35,3</span>
+          </li>
+          <li>
+            <span class="chart-label">Fidji</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 63%;"></span></span>
+            <span class="chart-value">31,7</span>
+          </li>
+          <li>
+            <span class="chart-label">Mozambique</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 62%;"></span></span>
+            <span class="chart-value">30,9</span>
+          </li>
+          <li>
+            <span class="chart-label">Philippines</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 33%;"></span></span>
+            <span class="chart-value">16,7</span>
+          </li>
+        </ul>
+        <p class="article-chart-source muted">Calcul personnel, moyenne normalisée de EN.POP.EL5M.ZS et EN.CLC.MDAT.ZS (Banque mondiale, WDI).</p>
+      </div>
+
+      <h2>Les 18 pays du panel : exposition, dette et émissions</h2>
+      <p>Le tableau complet permet une première lecture visuelle : les pays les plus exposés climatiquement (Kenya, Maldives, Bangladesh) n'affichent pas systématiquement les ratios de dette les plus élevés, et inversement, le pays le plus endetté du panel (Mozambique, en restructuration depuis le scandale des « dettes cachées » de 2016) se situe dans la moyenne haute de l'exposition sans être le plus exposé.</p>
+
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Pays</th>
+              <th>Exposition climatique</th>
+              <th>Dette extérieure (% RNB)</th>
+              <th>Service dette (% export)</th>
+              <th>CO₂/habitant (t)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Kenya</td><td>50,2</td><td>35,0</td><td>27,2</td><td>0,38</td></tr>
+            <tr><td>Maldives</td><td>50,1</td><td>75,6</td><td>9,2</td><td>3,57</td></tr>
+            <tr><td>Bangladesh</td><td>43,7</td><td>22,3</td><td>15,8</td><td>0,72</td></tr>
+            <tr><td>Vietnam</td><td>42,4</td><td>28,8</td><td>7,7</td><td>4,27</td></tr>
+            <tr><td>Inde</td><td>35,3</td><td>18,6</td><td>10,5</td><td>2,17</td></tr>
+            <tr><td>Fidji</td><td>31,7</td><td>71,4</td><td>9,5</td><td>1,62</td></tr>
+            <tr><td>Mozambique</td><td>30,9</td><td>350,6</td><td>46,5</td><td>0,29</td></tr>
+            <tr><td>Philippines</td><td>16,7</td><td>26,3</td><td>14,4</td><td>1,50</td></tr>
+            <tr><td>Égypte</td><td>16,5</td><td>42,0</td><td>49,2</td><td>2,50</td></tr>
+            <tr><td>Afrique du Sud</td><td>13,9</td><td>44,8</td><td>16,3</td><td>6,88</td></tr>
+            <tr><td>Vanuatu</td><td>10,8</td><td>39,2</td><td>6,5</td><td>0,87</td></tr>
+            <tr><td>Indonésie</td><td>9,9</td><td>31,0</td><td>24,7</td><td>2,87</td></tr>
+            <tr><td>Pakistan</td><td>8,3</td><td>35,6</td><td>39,5</td><td>0,81</td></tr>
+            <tr><td>Brésil</td><td>5,7</td><td>28,7</td><td>26,7</td><td>2,32</td></tr>
+            <tr><td>Nigeria</td><td>3,7</td><td>60,0</td><td>21,9</td><td>0,57</td></tr>
+            <tr><td>Turquie</td><td>3,4</td><td>39,4</td><td>23,4</td><td>5,38</td></tr>
+            <tr><td>Argentine</td><td>2,0</td><td>39,1</td><td>38,3</td><td>4,01</td></tr>
+            <tr><td>Maroc</td><td>1,8</td><td>44,7</td><td>12,9</td><td>1,84</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Un constat frappant ressort de la dernière colonne : les pays les plus exposés au risque climatique physique (Kenya, Maldives, Bangladesh, Mozambique) sont aussi, sans exception, ceux dont les émissions de CO₂ par habitant sont les plus faibles du panel — souvent 5 à 15 fois inférieures à celles de l'Afrique du Sud, de la Turquie ou de l'Argentine. C'est l'asymétrie centrale du débat climatique international : les pays qui contribuent le moins au problème en subissent le plus les conséquences physiques.</p>
+
+      <h2>Le test statistique : que dit la corrélation ?</h2>
+      <blockquote class="article-quote">
+        "Corrélation n'est pas causalité, mais l'absence de corrélation est déjà une information : elle oblige à préciser où, exactement, on s'attend à voir apparaître un effet."
+      </blockquote>
+      <p>En calculant le coefficient de corrélation de Pearson entre l'indice d'exposition climatique et les deux mesures du fardeau de la dette sur ce panel de 18 pays, le résultat est net : <strong>aucune corrélation statistiquement significative</strong> n'apparaît. Entre exposition climatique et dette extérieure rapportée au RNB, r = 0,15 (p = 0,55) ; entre exposition climatique et service de la dette rapporté aux exportations, r = -0,28 (p = 0,27). Le seuil conventionnel de significativité (p &lt; 0,05) n'est atteint dans aucun des deux cas, et le signe même de la seconde corrélation (négatif) va à l'encontre de l'hypothèse d'une prime climatique qui alourdirait davantage la dette des pays les plus exposés.</p>
+      <p>En excluant le Mozambique, cas extrême dont le ratio de dette reflète surtout un scandale de dette cachée révélé en 2016 plutôt qu'un effet climatique, le résultat ne change pas fondamentalement : r tombe à 0,05 pour la dette extérieure, et la corrélation avec le service de la dette se renforce légèrement en valeur absolue (r = -0,38) sans devenir significative (p = 0,13) sur un échantillon de cette taille.</p>
+
+      <h2>Pourquoi ce test simple ne suffit pas à trancher</h2>
+      <p>Ce résultat ne réfute pas l'hypothèse d'une prime climatique : il montre les limites d'un test bivarié sur un petit échantillon. Trois raisons principales expliquent l'écart avec les études économétriques qui, elles, documentent un effet :</p>
+      <ul class="article-checklist">
+        <li><strong>Stock de dette ≠ coût de la dette.</strong> Une part importante de la dette extérieure de ces pays est concessionnelle (prêts bonifiés d'institutions multilatérales, souvent accordés justement en raison de leur vulnérabilité), ce qui peut faire baisser le ratio de dette apparent sans rien dire du taux auquel ces pays empruntent sur les marchés obligataires. La véritable « prime climatique » documentée dans la littérature porte sur le taux d'intérêt ou le spread de crédit, pas sur le volume de dette — une donnée de marché (rendements obligataires souverains, spreads CDS) qui n'est pas disponible via une API publique gratuite.</li>
+        <li><strong>Variables de confusion non contrôlées.</strong> Le niveau de revenu par habitant, la qualité des institutions et l'accès aux marchés de capitaux affectent à la fois l'exposition climatique perçue et le coût d'emprunt, indépendamment d'un quelconque effet climatique direct. Une corrélation bivariée simple ne neutralise aucun de ces effets, contrairement aux régressions à variables de contrôle multiples utilisées dans les études citées plus haut.</li>
+        <li><strong>Taille d'échantillon.</strong> Avec 18 observations, seule une corrélation très forte (au-delà de |r| ≈ 0,47) aurait été statistiquement significative au seuil de 5 %. Un échantillon plus large, incluant l'ensemble des pays suivis par le Debtor Reporting System de la Banque mondiale (une centaine de pays), donnerait une puissance statistique bien supérieure.</li>
+      </ul>
+      <p>Ce test illustre en creux une règle utile pour tout exercice de ce type : une hypothèse plausible et largement défendue par des institutions sérieuses (FMI, V20, littérature académique) n'est pas automatiquement vérifiable avec un test simple sur données ouvertes ; et l'absence de résultat avec un tel test ne suffit pas à invalider des travaux plus rigoureux menés avec des données de marché et des contrôles adéquats.</p>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>Les pays les plus exposés au risque climatique physique sont aussi, systématiquement, ceux qui émettent le moins de CO₂ par habitant.</li>
+        <li>Sur ce panel de 18 pays, aucune corrélation significative n'apparaît entre exposition climatique et fardeau de la dette extérieure (stock ou service).</li>
+        <li>La « prime climatique » documentée dans la littérature porte sur le coût de la dette (taux, spreads), une donnée de marché non couverte ici — pas sur son volume.</li>
+        <li>Un échantillon de 18 pays limite fortement la puissance statistique d'un test de corrélation simple.</li>
+        <li>Les mécanismes d'échange dette contre nature (Belize, Équateur, Gabon) et le Resilience and Sustainability Trust du FMI restent, pour l'instant, des réponses ciblées plutôt qu'une remise à plat générale du coût de la dette climatique.</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>Ce croisement de données publiques ne confirme ni n'infirme l'existence d'une prime climatique sur la dette souveraine des pays vulnérables : il montre surtout qu'un test rigoureux exige des données que les API publiques gratuites ne couvrent pas encore (rendements obligataires, spreads de crédit), et des méthodes plus robustes qu'une simple corrélation bivariée. La vraie question n'est donc pas seulement « existe-t-il un lien ? » mais « à quel niveau exactement se loge-t-il : dans le prix de la dette de marché, dans l'accès au financement concessionnel, ou dans la capacité de remboursement anticipée par les créanciers ? ». Ce sont des questions différentes, avec des implications de politique publique différentes.</p>
+
+      <h2>Sources et méthode</h2>
+      <ul class="article-checklist">
+        <li>Banque mondiale, <em>World Development Indicators</em> : exposition climatique physique (<code>EN.POP.EL5M.ZS</code>, <code>EN.CLC.MDAT.ZS</code>), émissions de CO₂ par habitant (<code>EN.GHG.CO2.PC.CE.AR5</code>).</li>
+        <li>Banque mondiale, <em>International Debt Statistics</em> : dette extérieure (<code>DT.DOD.DECT.GN.ZS</code>) et service de la dette (<code>DT.TDS.DECT.EX.ZS</code>), panel de 18 pays suivis par le Debtor Reporting System.</li>
+        <li>Corrélations de Pearson calculées avec <code>scipy.stats.pearsonr</code> sur les données les plus récentes disponibles par pays (2019-2024 selon les indicateurs).</li>
+        <li>Contexte institutionnel : rapport Imperial College London / SOAS (2021) sur le coût du capital et la vulnérabilité climatique ; FMI, Resilience and Sustainability Trust (2022).</li>
+        <li>Script complet de collecte et de calcul disponible en téléchargement en haut de cette note.</li>
+      </ul>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fdette-souveraine-climat.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fdette-souveraine-climat.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Sur des sujets proches :</p>
+        <ul>
+          <li><a class="text-link" href="malediction-ressources-naturelles.html">La malédiction des ressources naturelles existe-t-elle vraiment ?</a></li>
+          <li><a class="text-link" href="risque-pays-cadre-analyse.html">Évaluer le risque pays : cadre d'analyse et limites des méthodologies de notation</a></li>
+          <li><a class="text-link" href="deficit-public-et-donnees.html">Déficit public et données : ce que mesurent (vraiment) les chiffres</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

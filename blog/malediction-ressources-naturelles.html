@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - La malédiction des ressources naturelles">
+  <title>La malédiction des ressources naturelles | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="La malédiction des ressources naturelles existe-t-elle vraiment ?">
+  <meta property="og:description" content="Pétrole, gaz, minerais : les pays qui en regorgent ont-ils une gouvernance plus faible et une croissance plus instable ? Test empirique sur 17 pays.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/malediction-ressources-naturelles.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="La malédiction des ressources naturelles">
+  <meta name="twitter:description" content="Pétrole, gaz, minerais : les pays qui en regorgent ont-ils une gouvernance plus faible et une croissance plus instable ? Test empirique sur 17 pays.">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/malediction-ressources-naturelles.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "La malédiction des ressources naturelles existe-t-elle vraiment ?",
+    "datePublished": "2026-08-14",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/malediction-ressources-naturelles.html",
+    "description": "Pétrole, gaz, minerais : les pays qui en regorgent ont-ils une gouvernance plus faible et une croissance plus instable ? Test empirique sur 17 pays.",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 14 Aoû 2026 · 9 min de lecture</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">ressources naturelles</span>
+            <span class="article-tag">développement</span>
+            <span class="article-tag">gouvernance</span>
+          </div>
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import statistics
+import requests
+from scipy import stats
+
+INDICATORS = {
+    "NY.GDP.TOTL.RT.ZS": "rentes_ressources_pib",   # % PIB, total
+    "NY.GDP.PETR.RT.ZS": "rentes_petrole_pib",       # % PIB, petrole seul
+    "GOV_WGI_CC.EST": "controle_corruption",         # indice WGI, -2.5 a +2.5
+    "GOV_WGI_GE.EST": "efficacite_gouvernementale",  # indice WGI, -2.5 a +2.5
+}
+
+def fetch_growth_volatility(iso3_codes, years=15):
+    """Ecart-type de la croissance du PIB reel sur 15 ans : mesure
+    de l'instabilite de la croissance, pas seulement son niveau."""
+    ...
+
+r1, p1 = stats.pearsonr(rentes, volat)
+r2, p2 = stats.pearsonr(rentes, corruption)
+r3, p3 = stats.pearsonr(rentes, efficacite)</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/malediction-ressources-naturelles.py" download>Télécharger le script complet (.py)</a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <h1>La malédiction des ressources naturelles existe-t-elle vraiment ?</h1>
+      <p class="lead">Depuis les travaux de Sachs et Warner dans les années 1990, une idée fait consensus en économie du développement : les pays richement dotés en pétrole, gaz ou minerais grandissent souvent moins bien, et moins proprement, que les pays qui en sont dépourvus. C'est la « malédiction des ressources ». Testons-la avec des données publiques sur 17 pays, du Tchad à la Norvège.</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : ressources naturelles et gouvernance" width="1200" height="700" loading="lazy">
+        <figcaption>Pétrole, gaz, minerais : l'abondance de ressources naturelles rapportée au PIB varie de moins de 1 % (Botswana) à plus de 40 % (Irak) dans ce panel de 17 pays.</figcaption>
+      </figure>
+
+      <h2>Une idée ancienne, deux mécanismes distincts</h2>
+      <p>La « malédiction des ressources » (resource curse, ou « paradoxe de l'abondance ») recouvre en réalité deux hypothèses différentes, souvent confondues :</p>
+      <ul class="article-checklist">
+        <li><strong>Le canal macroéconomique :</strong> une économie dépendante des matières premières est exposée aux cycles de prix mondiaux, ce qui rend sa croissance plus volatile (booms et effondrements alternés) qu'une économie diversifiée.</li>
+        <li><strong>Le canal institutionnel :</strong> une rente facile à capter (pétrole, minerais) affaiblirait les incitations à construire des institutions solides, encouragerait la corruption et découragerait la redevabilité démocratique — la rente remplaçant l'impôt comme source de revenu de l'État, elle desserrerait le lien entre gouvernants et citoyens.</li>
+      </ul>
+      <p>Ces deux mécanismes ne sont pas nécessairement liés : un pays peut avoir une croissance volatile sans gouvernance dégradée, ou l'inverse. Le panel retenu ici (17 pays où les rentes de ressources naturelles représentent de moins de 1 % à plus de 40 % du PIB) permet de tester les deux séparément.</p>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Rentes des ressources naturelles, % du PIB (pays les plus dépendants)</p>
+        <ul class="article-chart-bars">
+          <li>
+            <span class="chart-label">Irak</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 100%;"></span></span>
+            <span class="chart-value">43,4</span>
+          </li>
+          <li>
+            <span class="chart-label">RD Congo</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 89%;"></span></span>
+            <span class="chart-value">38,8</span>
+          </li>
+          <li>
+            <span class="chart-label">Angola</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 69%;"></span></span>
+            <span class="chart-value">30,0</span>
+          </li>
+          <li>
+            <span class="chart-label">Koweït</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 67%;"></span></span>
+            <span class="chart-value">29,3</span>
+          </li>
+          <li>
+            <span class="chart-label">Qatar</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 63%;"></span></span>
+            <span class="chart-value">27,3</span>
+          </li>
+          <li>
+            <span class="chart-label">Norvège</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 23%;"></span></span>
+            <span class="chart-value">10,0</span>
+          </li>
+          <li>
+            <span class="chart-label">Botswana</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 2%;"></span></span>
+            <span class="chart-value">1,0</span>
+          </li>
+        </ul>
+        <p class="article-chart-source muted">Banque mondiale, NY.GDP.TOTL.RT.ZS (total des rentes : pétrole, gaz, minerais, bois, charbon).</p>
+      </div>
+
+      <h2>Les 17 pays du panel</h2>
+      <p>La volatilité de la croissance est mesurée par l'écart-type de la croissance annuelle du PIB réel sur les quinze dernières années disponibles. Le contrôle de la corruption et l'efficacité gouvernementale proviennent des Indicateurs mondiaux de gouvernance (WGI) de la Banque mondiale, sur une échelle allant théoriquement de -2,5 (très faible) à +2,5 (très fort).</p>
+
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Pays</th>
+              <th>Rentes ressources (% PIB)</th>
+              <th>Dont pétrole (% PIB)</th>
+              <th>Volatilité croissance</th>
+              <th>Contrôle corruption</th>
+              <th>Efficacité gouv.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Irak</td><td>43,4</td><td>42,8</td><td>6,62</td><td>-1,21</td><td>-1,10</td></tr>
+            <tr><td>RD Congo</td><td>38,8</td><td>0,6</td><td>4,56</td><td>-1,52</td><td>-1,69</td></tr>
+            <tr><td>Angola</td><td>30,0</td><td>28,3</td><td>3,31</td><td>-0,62</td><td>-0,79</td></tr>
+            <tr><td>Koweït</td><td>29,3</td><td>27,6</td><td>4,00</td><td>0,22</td><td>0,33</td></tr>
+            <tr><td>Qatar</td><td>27,3</td><td>15,3</td><td>3,66</td><td>0,75</td><td>1,13</td></tr>
+            <tr><td>Kazakhstan</td><td>26,8</td><td>14,8</td><td>2,45</td><td>-0,07</td><td>0,15</td></tr>
+            <tr><td>Arabie saoudite</td><td>25,6</td><td>23,7</td><td>4,05</td><td>0,75</td><td>0,78</td></tr>
+            <tr><td>Algérie</td><td>22,6</td><td>14,5</td><td>2,31</td><td>-0,59</td><td>-0,25</td></tr>
+            <tr><td>Tchad</td><td>21,3</td><td>16,8</td><td>3,35</td><td>-1,39</td><td>-1,10</td></tr>
+            <tr><td>Russie</td><td>18,5</td><td>9,7</td><td>2,57</td><td>-0,89</td><td>-0,32</td></tr>
+            <tr><td>Émirats arabes unis</td><td>17,6</td><td>15,7</td><td>4,20</td><td>1,17</td><td>1,26</td></tr>
+            <tr><td>Chili</td><td>16,9</td><td>0,0</td><td>3,70</td><td>1,11</td><td>0,96</td></tr>
+            <tr><td>Australie</td><td>13,4</td><td>0,3</td><td>1,09</td><td>1,85</td><td>1,81</td></tr>
+            <tr><td>Norvège</td><td>10,0</td><td>6,1</td><td>1,38</td><td>1,96</td><td>1,84</td></tr>
+            <tr><td>Nigeria</td><td>8,6</td><td>6,2</td><td>3,30</td><td>-1,11</td><td>-1,01</td></tr>
+            <tr><td>Canada</td><td>4,9</td><td>2,8</td><td>2,38</td><td>1,63</td><td>1,76</td></tr>
+            <tr><td>Botswana</td><td>1,0</td><td>0,0</td><td>5,67</td><td>0,63</td><td>0,42</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Le test statistique</h2>
+      <blockquote class="article-quote">
+        "Ce n'est pas la ressource qui est maudite : c'est l'absence d'institutions capables de la gérer avant qu'elle ne soit découverte."
+      </blockquote>
+      <p>Trois corrélations de Pearson ont été calculées sur ce panel de 17 pays :</p>
+      <ul class="article-checklist">
+        <li><strong>Rentes de ressources ↔ volatilité de la croissance :</strong> r = 0,41 (p = 0,105). La direction va dans le sens attendu (plus de rentes, plus de volatilité), mais le résultat n'est pas statistiquement significatif au seuil conventionnel de 5 % sur cet échantillon.</li>
+        <li><strong>Rentes de ressources ↔ contrôle de la corruption :</strong> r = -0,55 (p = 0,023). <strong>Statistiquement significatif.</strong> Plus un pays dépend des rentes de ressources naturelles, plus son score de contrôle de la corruption est faible.</li>
+        <li><strong>Rentes de ressources ↔ efficacité gouvernementale :</strong> r = -0,55 (p = 0,023). <strong>Statistiquement significatif</strong>, avec exactement la même intensité que pour la corruption.</li>
+      </ul>
+      <p>Sur ce panel, c'est donc le canal institutionnel de la malédiction des ressources qui ressort le plus nettement des données, pas le canal macroéconomique de la volatilité — même si ce dernier va dans le sens attendu et pourrait devenir significatif sur un échantillon plus large.</p>
+
+      <h2>Les contre-exemples sont le vrai enseignement</h2>
+      <div class="article-grid-2col">
+        <div>
+          <h3>Norvège : la meilleure gouvernance du panel</h3>
+          <p>Avec 10 % du PIB en rentes de ressources (pétrole et gaz de la mer du Nord), la Norvège affiche pourtant le meilleur score de contrôle de la corruption (+1,96) et d'efficacité gouvernementale (+1,84) de tout le panel — supérieur même à l'Australie et au Canada. Le mécanisme le plus souvent cité : la découverte du pétrole dans les années 1960 est intervenue dans un pays déjà doté d'institutions démocratiques solides, qui a choisi de placer l'essentiel de la rente dans un fonds souverain (le plus grand du monde) plutôt que de la faire transiter par le budget courant.</p>
+        </div>
+        <div>
+          <h3>Botswana : l'exception africaine</h3>
+          <p>Le Botswana est le contre-exemple classique de la littérature sur la malédiction des ressources : malgré une économie longtemps très dépendante du diamant, son score de contrôle de la corruption (+0,63) et d'efficacité gouvernementale (+0,42) reste nettement positif, très au-dessus de la moyenne des pays africains riches en ressources du panel (RD Congo, Angola, Tchad, Nigeria, tous négatifs). Les historiens de l'économie l'attribuent à des institutions de gestion des ressources minières mises en place dès l'indépendance (1966), avant même l'essor du secteur diamantaire.</p>
+        </div>
+      </div>
+      <p>Ces deux cas illustrent ce que la littérature académique appelle l'hypothèse de la « qualité institutionnelle antérieure » : ce n'est pas la présence de ressources qui détermine le résultat, mais la qualité des institutions déjà en place au moment où la rente commence à affluer. À l'inverse, l'Irak (institutions fragilisées par des décennies de guerre) et la RD Congo (État historiquement faible) cumulent rentes élevées et gouvernance très dégradée.</p>
+
+      <h2>Limites du test</h2>
+      <ul class="article-checklist">
+        <li>17 observations limitent fortement la puissance statistique : seule une corrélation forte peut atteindre la significativité à 5 %, ce qui explique pourquoi le lien avec la volatilité de la croissance (r=0,41) n'est pas significatif malgré une direction cohérente.</li>
+        <li>Corrélation n'est pas causalité : la relation pourrait aussi être inversée (une gouvernance déjà faible facilite une exploitation prédatrice des ressources) ou passer par une troisième variable (héritage colonial, conflits, géographie).</li>
+        <li>Les indices WGI reposent sur des perceptions d'experts et d'enquêtes agrégées, avec les critiques méthodologiques habituelles (marges d'erreur, comparabilité limitée dans le temps).</li>
+        <li>Le panel a été construit pour couvrir un large éventail de dépendance aux ressources (de 1 % à 43 % du PIB) et n'est pas un échantillon aléatoire représentatif de tous les pays du monde.</li>
+      </ul>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>Sur ce panel de 17 pays, la dépendance aux ressources naturelles est corrélée significativement à une gouvernance plus faible (corruption et efficacité de l'État), mais pas de façon statistiquement significative à une croissance plus volatile.</li>
+        <li>Norvège et Botswana montrent que la malédiction n'est pas automatique : la qualité des institutions avant la découverte des ressources semble compter davantage que les ressources elles-mêmes.</li>
+        <li>Irak et RD Congo, à l'inverse, cumulent forte dépendance aux ressources et gouvernance très dégradée.</li>
+        <li>Un échantillon de 17 pays impose une lecture prudente : la direction des résultats est cohérente avec la littérature, mais la taille de l'échantillon limite ce qu'on peut affirmer avec certitude.</li>
+      </ul>
+
+      <h2>Sources et méthode</h2>
+      <ul class="article-checklist">
+        <li>Banque mondiale, <em>World Development Indicators</em> : rentes totales de ressources naturelles (<code>NY.GDP.TOTL.RT.ZS</code>), rentes pétrolières (<code>NY.GDP.PETR.RT.ZS</code>), croissance du PIB réel (<code>NY.GDP.MKTP.KD.ZG</code>, écart-type sur 15 ans).</li>
+        <li>Banque mondiale, <em>Worldwide Governance Indicators</em> : contrôle de la corruption (<code>GOV_WGI_CC.EST</code>), efficacité gouvernementale (<code>GOV_WGI_GE.EST</code>).</li>
+        <li>Corrélations de Pearson calculées avec <code>scipy.stats.pearsonr</code>, panel de 17 pays (le Venezuela a été exclu faute de données de rentes fiables).</li>
+        <li>Référence historique : Sachs, J. &amp; Warner, A. (1995 puis 2001), travaux fondateurs sur la « malédiction des ressources ».</li>
+        <li>Script complet de collecte et de calcul disponible en téléchargement en haut de cette note.</li>
+      </ul>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fmalediction-ressources-naturelles.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fmalediction-ressources-naturelles.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Sur des sujets proches :</p>
+        <ul>
+          <li><a class="text-link" href="risque-pays-cadre-analyse.html">Évaluer le risque pays : cadre d'analyse et limites des méthodologies de notation</a></li>
+          <li><a class="text-link" href="dette-souveraine-climat.html">Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

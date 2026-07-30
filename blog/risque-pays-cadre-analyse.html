@@ -58,7 +58,7 @@ BROUILLON - NON PUBLIE
   <main class="section article-wrap">
     <article class="panel article-prose">
       <div class="article-meta-row">
-        <p class="eyebrow">Notes et actualités · 5 Aoû 2026 · 6 min de lecture</p>
+        <p class="eyebrow">Notes et actualités · 5 Aoû 2026 · 11 min de lecture</p>
         <div class="article-meta-right">
           <div class="article-tags">
             <span class="article-tag">international</span>
@@ -68,19 +68,30 @@ BROUILLON - NON PUBLIE
           <details class="code-toggle">
             <summary>Voir le code</summary>
             <div class="code-panel">
-              <pre><code>import pandas as pd
+              <pre><code>import requests
+import pandas as pd
 
-# Score de risque pondéré à partir de 3 composantes normalisées (0-100)
-poids = {"politique": 0.5, "financier": 0.25, "economique": 0.25}
+# Indicateurs Banque mondiale : gouvernance (WGI), macroéconomie et
+# finances externes (WDI). API publique, sans clé.
+WGI = ["GOV_WGI_VA.EST", "GOV_WGI_PV.EST", "GOV_WGI_GE.EST",
+       "GOV_WGI_RQ.EST", "GOV_WGI_RL.EST", "GOV_WGI_CC.EST"]
+ECON = ["NY.GDP.MKTP.KD.ZG", "FP.CPI.TOTL.ZG",
+        "SL.UEM.TOTL.ZS", "NY.GDP.PCAP.CD"]
+FIN = ["BN.CAB.XOKA.GD.ZS", "FI.RES.TOTL.MO", "GC.DOD.TOTL.GD.ZS"]
 
-df = pd.read_csv("risque_pays.csv")  # colonnes: pays, politique, financier, economique
-df["score_global"] = (
-    df["politique"] * poids["politique"]
-    + df["financier"] * poids["financier"]
-    + df["economique"] * poids["economique"]
-)
-print(df.sort_values("score_global", ascending=False))</code></pre>
-              <a class="btn btn-outline btn-mini" href="../assets/code/risque-pays-score.py" download>Télécharger le script (.py)</a>
+def fetch(code, pays):
+    url = (f"https://api.worldbank.org/v2/country/{';'.join(pays)}"
+           f"/indicator/{code}?format=json&per_page=1000&mrv=5")
+    data = requests.get(url, timeout=20).json()[1]
+    # on garde, par pays, la valeur non nulle la plus récente
+    return {r["countryiso3code"]: r["value"]
+            for r in sorted(data, key=lambda r: r["date"], reverse=True)
+            if r["value"] is not None}
+
+# Score composé = 50% politique (WGI) + 25% financier + 25% économique
+# (pondération inspirée de la structure ICRG, 100/50/50 points)
+score_global = 0.5 * politique + 0.25 * financier + 0.25 * economique</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/risque-pays-cadre-analyse.py" download>Télécharger le script complet (.py)</a>
             </div>
           </details>
         </div>
@@ -96,7 +107,7 @@ print(df.sort_values("score_global", ascending=False))</code></pre>
 
       <h2>Qu'est-ce que le risque pays ?</h2>
       <p>Le risque pays désigne la probabilité qu'un environnement national (politique, économique, financier ou réglementaire) affecte négativement la rentabilité ou la faisabilité d'une opération économique : investissement direct, prêt souverain, implantation commerciale ou contrat d'exportation. Contrairement au risque de crédit d'une entreprise, il ne dépend pas d'un seul agent mais de facteurs largement exogènes à la contrepartie : stabilité des institutions, orientation de la politique économique, exposition aux chocs externes.</p>
-      <p>Les agences spécialisées (Coface, PRS Group avec l'ICRG, Euler Hermes) et les organisations internationales (Banque mondiale, FMI) publient des scores de risque pays construits sur des méthodologies proches : décomposer le risque en composantes, leur attribuer un poids, puis agréger le tout en un score ou une note synthétique.</p>
+      <p>Les agences spécialisées (Coface, PRS Group avec l'ICRG, Allianz Trade — ex-Euler Hermes) et les organisations internationales (Banque mondiale, FMI) publient des scores de risque pays construits sur des méthodologies proches : décomposer le risque en composantes, leur attribuer un poids, puis agréger le tout en un score ou une note synthétique. Aucune de ces méthodologies n'est un standard unique et obligatoire : les agences de notation financière (Fitch, Moody's, S&amp;P) privilégient une approche quantitative centrée sur la soutenabilité financière, tandis que les cabinets spécialisés en risque politique (ICRG/PRS Group, Euromoney Country Risk, IHS Markit, l'Economist Intelligence Unit) pondèrent davantage l'analyse qualitative des institutions.</p>
 
       <div class="article-callout">
         <strong>Point clé :</strong> un score de risque pays n'est pas une prévision, c'est une pondération explicite d'hypothèses sur ce qui compte le plus pour la décision à prendre. Deux méthodologies peuvent légitimement classer les mêmes pays différemment.
@@ -120,7 +131,11 @@ print(df.sort_values("score_global", ascending=False))</code></pre>
         "Un bon modèle de risque pays ne cherche pas à prédire la prochaine crise, il cherche à rendre explicites les hypothèses sur lesquelles repose une décision d'exposition."
       </blockquote>
 
-      <h2>Construire un score : un exemple simplifié</h2>
+      <h2>Comment les assureurs-crédit notent-ils réellement les pays ?</h2>
+      <p>Coface (Compagnie française d'assurance pour le commerce extérieur), fondée en 1946, publie chaque trimestre une notation risque pays pour environ 160 pays, sur une échelle à huit niveaux : <strong>A1</strong> (risque très faible), <strong>A2</strong> (faible), <strong>A3</strong> (assez acceptable), <strong>A4</strong> (acceptable), <strong>B</strong> (significatif), <strong>C</strong> (élevé), <strong>D</strong> (très élevé), <strong>E</strong> (extrême). Cette note reflète le risque moyen de défaut de paiement à court terme des entreprises d'un pays donné ; elle est produite par un département d'études économiques d'une douzaine d'économistes répartis sur six zones géographiques, appuyés par plus de 230 analystes sectoriels, et publiée dans un « Country &amp; Sector Risk Handbook » annuel couvrant 162 pays et 13 secteurs. D'autres assureurs-crédit publient des grilles comparables sous des noms différents : Allianz Trade (Allemagne, ex-Euler Hermes), Atradius (Pays-Bas), SACE (Italie), UK Export Finance (Royaume-Uni) ou l'Export-Import Bank of the United States.</p>
+      <p>Ces notes propriétaires ne sont pas publiques dans le détail de leur calcul, et les valeurs précises par pays ne sont pas rediffusables ici. La suite de cette note ne reproduit donc pas les notes Coface : elle construit, à partir de données publiques de la Banque mondiale et d'une pondération inspirée de la structure ICRG, un score personnel comparable dans sa logique — mais pas dans ses valeurs — à celui d'un assureur-crédit.</p>
+
+      <h2>Construire un score : méthode et données réelles</h2>
       <p>Le tableau ci-dessous reprend une pondération inspirée de l'ICRG (100 points de risque politique, 50 de risque financier, 50 de risque économique, ramenés à une échelle 0-100 où un score élevé signifie un risque <em>faible</em>) :</p>
 
       <div class="article-table-wrap">
@@ -152,42 +167,99 @@ print(df.sort_values("score_global", ascending=False))</code></pre>
         </table>
       </div>
 
-      <p>Appliqué à quelques pays suivis dans mes notes (échelle illustrative, 100 = risque le plus faible) :</p>
+      <p>Composante politique : moyenne des six dimensions des <em>Worldwide Governance Indicators</em> (WGI) de la Banque mondiale, ramenées de l'échelle [-2,5 ; +2,5] à [0 ; 100]. Composantes économique et financière : indicateurs des <em>World Development Indicators</em> (WDI), normalisés min-max sur l'échantillon de 22 pays retenu (Europe, Afrique, Moyen-Orient, Asie, Amériques). Appliqué à un sous-ensemble de ce panel (données les plus récentes disponibles par indicateur, 2023-2025 selon les pays) :</p>
 
       <div class="article-chart">
-        <p class="article-chart-title">Score de risque pays illustratif (100 = risque le plus faible)</p>
+        <p class="article-chart-title">Score de risque pays composé — données réelles Banque mondiale (100 = risque le plus faible)</p>
         <ul class="article-chart-bars">
           <li>
-            <span class="chart-label">France</span>
-            <span class="chart-track"><span class="chart-bar" style="width: 82%;"></span></span>
-            <span class="chart-value">82</span>
+            <span class="chart-label">Japon</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 72.6%;"></span></span>
+            <span class="chart-value">72,6</span>
           </li>
           <li>
-            <span class="chart-label">Espagne</span>
-            <span class="chart-track"><span class="chart-bar" style="width: 74%;"></span></span>
-            <span class="chart-value">74</span>
+            <span class="chart-label">Allemagne</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 63.0%;"></span></span>
+            <span class="chart-value">63,0</span>
+          </li>
+          <li>
+            <span class="chart-label">États-Unis</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 57.3%;"></span></span>
+            <span class="chart-value">57,3</span>
+          </li>
+          <li>
+            <span class="chart-label">France</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 55.3%;"></span></span>
+            <span class="chart-value">55,3</span>
+          </li>
+          <li>
+            <span class="chart-label">Chine</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 55.3%;"></span></span>
+            <span class="chart-value">55,3</span>
           </li>
           <li>
             <span class="chart-label">Maroc</span>
-            <span class="chart-track"><span class="chart-bar" style="width: 66%;"></span></span>
-            <span class="chart-value">66</span>
-          </li>
-          <li>
-            <span class="chart-label">Roumanie</span>
-            <span class="chart-track"><span class="chart-bar" style="width: 61%;"></span></span>
-            <span class="chart-value">61</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 43.8%;"></span></span>
+            <span class="chart-value">43,8</span>
           </li>
           <li>
             <span class="chart-label">Turquie</span>
-            <span class="chart-track"><span class="chart-bar" style="width: 48%;"></span></span>
-            <span class="chart-value">48</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 40.7%;"></span></span>
+            <span class="chart-value">40,7</span>
+          </li>
+          <li>
+            <span class="chart-label">Égypte</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 34.7%;"></span></span>
+            <span class="chart-value">34,7</span>
           </li>
         </ul>
-        <p class="article-chart-source muted">Données illustratives à remplacer par un vrai calcul (voir le code ci-dessus).</p>
+        <p class="article-chart-source muted">Calcul personnel à partir des indicateurs Banque mondiale (WGI + WDI), pondération 50 % politique / 25 % financier / 25 % économique. Ce n'est pas la note Coface, Allianz Trade ou toute autre agence commerciale.</p>
+      </div>
+
+      <p>Le tableau complet ci-dessous couvre les 22 pays du panel, avec une équivalence indicative sur une échelle inspirée de la grille Coface (A1 à E) — <strong>construite par mes soins à partir du score composé</strong>, sans lien avec les notes réellement publiées par Coface ou tout autre assureur-crédit :</p>
+
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Pays</th>
+              <th>Politique</th>
+              <th>Économique</th>
+              <th>Financier</th>
+              <th>Score composé</th>
+              <th>Grade indicatif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Japon</td><td>78,5</td><td>60,6</td><td>72,9</td><td>72,6</td><td>A1</td></tr>
+            <tr><td>Émirats arabes unis</td><td>63,3</td><td>75,8</td><td>63,4</td><td>66,4</td><td>A2</td></tr>
+            <tr><td>Canada</td><td>77,7</td><td>65,1</td><td>32,2</td><td>63,2</td><td>A3</td></tr>
+            <tr><td>Allemagne</td><td>77,2</td><td>63,9</td><td>33,8</td><td>63,0</td><td>A3</td></tr>
+            <tr><td>Arabie saoudite</td><td>52,9</td><td>71,8</td><td>61,9</td><td>59,9</td><td>A4</td></tr>
+            <tr><td>États-Unis</td><td>68,5</td><td>77,8</td><td>14,6</td><td>57,3</td><td>A4</td></tr>
+            <tr><td>Pologne</td><td>63,3</td><td>65,7</td><td>31,5</td><td>55,9</td><td>A4</td></tr>
+            <tr><td>Chine</td><td>45,1</td><td>67,6</td><td>63,2</td><td>55,3</td><td>A4</td></tr>
+            <tr><td>France</td><td>68,2</td><td>60,4</td><td>24,3</td><td>55,3</td><td>A4</td></tr>
+            <tr><td>Royaume-Uni</td><td>73,4</td><td>64,9</td><td>8,2</td><td>55,0</td><td>A4</td></tr>
+            <tr><td>Italie</td><td>63,3</td><td>58,3</td><td>35,3</td><td>55,0</td><td>A4</td></tr>
+            <tr><td>Espagne</td><td>65,1</td><td>60,7</td><td>25,7</td><td>54,1</td><td>A4</td></tr>
+            <tr><td>Inde</td><td>47,0</td><td>72,0</td><td>39,6</td><td>51,4</td><td>A4</td></tr>
+            <tr><td>Indonésie</td><td>45,9</td><td>65,5</td><td>31,9</td><td>47,3</td><td>B</td></tr>
+            <tr><td>Brésil</td><td>44,7</td><td>53,0</td><td>39,6</td><td>45,5</td><td>B</td></tr>
+            <tr><td>Roumanie</td><td>55,8</td><td>49,2</td><td>14,6</td><td>43,9</td><td>B</td></tr>
+            <tr><td>Maroc</td><td>43,7</td><td>59,7</td><td>28,0</td><td>43,8</td><td>B</td></tr>
+            <tr><td>Mexique</td><td>38,1</td><td>51,6</td><td>42,4</td><td>42,5</td><td>B</td></tr>
+            <tr><td>Turquie</td><td>37,5</td><td>36,1</td><td>51,8</td><td>40,7</td><td>B</td></tr>
+            <tr><td>Afrique du Sud</td><td>48,4</td><td>27,2</td><td>37,8</td><td>40,5</td><td>B</td></tr>
+            <tr><td>Nigeria</td><td>28,4</td><td>45,7</td><td>48,6</td><td>37,7</td><td>C</td></tr>
+            <tr><td>Égypte</td><td>34,2</td><td>50,8</td><td>19,6</td><td>34,7</td><td>C</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <h2>Les limites des méthodologies de notation</h2>
-      <p>Trois limites reviennent systématiquement dans la littérature et dans la pratique. D'abord, la pondération des composantes reste un choix normatif : rien ne garantit que 50 % de risque politique soit le bon curseur pour un investisseur industriel plutôt qu'un prêteur souverain. Ensuite, les scores sont procycliques : ils se dégradent souvent après la matérialisation d'une crise plutôt que de l'anticiper, ce qui limite leur valeur prédictive au moment où elle compte le plus. Enfin, la qualité des données sous-jacentes (statistiques officielles, enquêtes d'experts) varie fortement d'un pays à l'autre, ce qui introduit un biais difficile à corriger.</p>
+      <p>Quatre limites reviennent systématiquement dans la littérature et dans la pratique. D'abord, la pondération des composantes reste un choix normatif : rien ne garantit que 50 % de risque politique soit le bon curseur pour un investisseur industriel plutôt qu'un prêteur souverain. Ensuite, les scores sont procycliques : ils se dégradent souvent après la matérialisation d'une crise plutôt que de l'anticiper, ce qui limite leur valeur prédictive au moment où elle compte le plus. Troisièmement, la qualité des données sous-jacentes (statistiques officielles, enquêtes d'experts) varie fortement d'un pays à l'autre, ce qui introduit un biais difficile à corriger — c'est particulièrement vrai pour la composante financière de ce modèle, où la couverture de l'indicateur de dette publique (<code>GC.DOD.TOTL.GD.ZS</code>) reste partielle ou ancienne pour plusieurs pays du panel.</p>
+      <p>Enfin, les <em>Worldwide Governance Indicators</em>, sur lesquels repose ici toute la composante politique, ont eux-mêmes fait l'objet de critiques académiques documentées : ce sont des indicateurs perceptuels (agrégeant des enquêtes d'experts, d'entreprises et de citoyens, pas des mesures directes), leur méthode d'agrégation (une composante principale non observée estimée par un modèle de mesure non observée) a été jugée arbitraire par certains chercheurs, et leurs marges d'erreur, bien que publiées, sont rarement reprises dans les usages qui en sont faits. Ils restent malgré tout la base de référence la plus large (plus de 200 pays depuis 1996) et sont utilisés, entre autres, par les agences de notation financière pour documenter leurs propres décisions.</p>
 
       <h2>Points à retenir</h2>
       <ul class="article-checklist">
@@ -195,10 +267,20 @@ print(df.sort_values("score_global", ascending=False))</code></pre>
         <li>La pondération des composantes est un choix méthodologique explicite, pas une donnée neutre.</li>
         <li>Les scores de risque sont utiles pour structurer une décision, pas pour prédire une crise.</li>
         <li>Toujours croiser plusieurs sources (agences, FMI, Banque mondiale) plutôt qu'un score unique.</li>
+        <li>Un score « fait maison » à partir de données publiques peut éclairer une décision, mais ne remplace pas une notation propriétaire d'assureur-crédit, qui intègre des informations non publiques (analystes sectoriels, remontées terrain).</li>
       </ul>
 
       <h2>Conclusion</h2>
-      <p>Le risque pays reste un outil d'aide à la décision plus qu'un instrument de prévision. Sa valeur tient moins à la précision du score final qu'à la discipline qu'il impose : documenter explicitement les hypothèses retenues sur ce qui menace une opération économique, et pouvoir les réviser à mesure que le contexte change.</p>
+      <p>Le risque pays reste un outil d'aide à la décision plus qu'un instrument de prévision. Sa valeur tient moins à la précision du score final qu'à la discipline qu'il impose : documenter explicitement les hypothèses retenues sur ce qui menace une opération économique, et pouvoir les réviser à mesure que le contexte change. Reproduire, même partiellement, la logique d'un assureur-crédit avec des données publiques est un bon exercice pour comprendre où se situent réellement l'incertitude et le jugement dans ces méthodologies.</p>
+
+      <h2>Sources et méthode</h2>
+      <ul class="article-checklist">
+        <li>Banque mondiale, <em>Worldwide Governance Indicators</em> (indicateurs <code>GOV_WGI_*.EST</code>), consulté via l'API publique <code>api.worldbank.org</code>.</li>
+        <li>Banque mondiale, <em>World Development Indicators</em> : croissance du PIB, inflation, chômage, PIB par habitant, solde courant, réserves de change, dette publique.</li>
+        <li>Coface, échelle de notation risque pays A1 à E et présentation du département d'études économiques (source : documentation publique Coface).</li>
+        <li>Panel retenu : 22 pays (Europe, Afrique, Moyen-Orient, Asie, Amériques) — données les plus récentes disponibles par indicateur et par pays, majoritairement 2023-2025.</li>
+        <li>Script complet de collecte et de calcul disponible en téléchargement en haut de cette note.</li>
+      </ul>
 
       <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
 
@@ -211,8 +293,9 @@ print(df.sort_values("score_global", ascending=False))</code></pre>
       <nav class="article-related" aria-label="Notes liées">
         <p class="muted">Sur des sujets proches :</p>
         <ul>
+          <li><a class="text-link" href="malediction-ressources-naturelles.html">La malédiction des ressources naturelles existe-t-elle vraiment ?</a></li>
+          <li><a class="text-link" href="dette-souveraine-climat.html">Dette souveraine et climat : la vulnérabilité climatique a-t-elle un prix ?</a></li>
           <li><a class="text-link" href="commerce-international-avantage-comparatif.html">Avantage comparatif et modèles de gravité</a></li>
-          <li><a class="text-link" href="banques-centrales-cible-inflation.html">Indépendance des banques centrales et ciblage d'inflation</a></li>
         </ul>
       </nav>
     </article>

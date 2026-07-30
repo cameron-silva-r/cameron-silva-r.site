@@ -652,6 +652,31 @@ h1 {
   gap: 0.4rem;
 }
 
+.article-share {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.article-related {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--stroke);
+}
+
+.article-related ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.article-related li + li {
+  margin-top: 0.3rem;
+}
+
 .text-link {
   font-weight: 700;
   color: var(--accent-dark);
@@ -841,5 +866,40 @@ h1 {
     flex-direction: column;
     justify-content: center;
     padding: 0.7rem 0;
+  }
+}
+
+@media print {
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .keyword-title,
+  .keyword-filters,
+  .article-pager,
+  .article-share,
+  .btn {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .panel {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    font-weight: 400;
   }
 }

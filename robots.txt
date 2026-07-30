@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /PRODUCTION_GUIDE/
+Disallow: /projects.html
+
+Sitemap: https://cameron-silva.fr/sitemap.xml

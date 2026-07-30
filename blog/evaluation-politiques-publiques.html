@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - Évaluer une politique publique">
+  <title>Évaluer une politique publique | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Évaluer une politique publique : de la théorie du changement à l'évaluation d'impact">
+  <meta property="og:description" content="RCT, différence de différences, discontinuité : comment choisir une méthode d'évaluation et éviter les pièges classiques.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/evaluation-politiques-publiques.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Évaluer une politique publique">
+  <meta name="twitter:description" content="RCT, différence de différences, discontinuité : comment choisir une méthode d'évaluation et éviter les pièges classiques.">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/evaluation-politiques-publiques.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Évaluer une politique publique : de la théorie du changement à l'évaluation d'impact",
+    "datePublished": "2026-08-12",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/evaluation-politiques-publiques.html",
+    "description": "RCT, différence de différences, discontinuité : comment choisir une méthode d'évaluation et éviter les pièges classiques.",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 12 Aoû 2026 · 6 min de lecture</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">politiques publiques</span>
+            <span class="article-tag">méthodologie</span>
+            <span class="article-tag">évaluation d'impact</span>
+          </div>
+        </div>
+      </div>
+
+      <h1>Évaluer une politique publique : de la théorie du changement à l'évaluation d'impact</h1>
+      <p class="lead">Une politique publique fonctionne-t-elle vraiment ? La question paraît simple, mais y répondre correctement suppose de choisir une méthode capable d'isoler l'effet de la politique de tout ce qui aurait de toute façon changé.</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : évaluation d'une politique publique" width="1200" height="700" loading="lazy">
+        <figcaption>Évaluer une politique, c'est comparer ce qui s'est passé à ce qui se serait passé sans elle.</figcaption>
+      </figure>
+
+      <h2>Théorie du changement avant tout</h2>
+      <p>Avant de choisir une méthode statistique, il faut expliciter la théorie du changement : par quel mécanisme la politique est censée produire l'effet recherché ? Une aide à l'embauche n'agit pas de la même façon qu'une formation professionnelle ou qu'une baisse de charges sociales, même si les trois visent l'emploi. Cette étape, souvent négligée, détermine quelles données collecter et quelle méthode d'évaluation sera pertinente.</p>
+      <p>Une fois la théorie du changement posée, l'évaluation peut être <em>ex ante</em> (avant la mise en œuvre, par simulation ou micro-simulation) ou <em>ex post</em> (après coup, sur données réelles). Les deux sont complémentaires : la première guide la conception, la seconde vérifie ce qui s'est réellement passé.</p>
+
+      <div class="article-callout">
+        <strong>Point clé :</strong> le problème central de toute évaluation d'impact est contrefactuel : on n'observe jamais ce qui se serait passé pour les mêmes individus en l'absence de la politique. Toute la méthodologie sert à construire un contrefactuel crédible.
+      </div>
+
+      <section class="article-grid-2">
+        <div class="article-note">
+          <h3>Évaluation ex ante</h3>
+          <p>Simulation, micro-simulation, modèles d'équilibre général calculable. Utile pour comparer des scénarios avant le vote d'une réforme, mais dépend fortement des hypothèses de comportement.</p>
+        </div>
+        <div class="article-note">
+          <h3>Évaluation ex post</h3>
+          <p>RCT, différence de différences, discontinuité, appariement. Mesure un effet réel, sur données observées, une fois la politique mise en œuvre.</p>
+        </div>
+      </section>
+
+      <blockquote class="article-quote">
+        "Corrélation n'est pas causalité : le bénéficiaire d'une politique n'est presque jamais un groupe tiré au hasard, c'est précisément ce biais de sélection que l'évaluation d'impact cherche à neutraliser."
+      </blockquote>
+
+      <h2>Panorama des méthodes d'évaluation ex post</h2>
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Méthode</th>
+              <th>Principe</th>
+              <th>Exigence principale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Essai contrôlé randomisé (RCT)</td>
+              <td>Tirage au sort entre groupe traité et groupe témoin</td>
+              <td>Randomisation faisable et acceptable éthiquement</td>
+            </tr>
+            <tr>
+              <td>Différence de différences</td>
+              <td>Compare l'évolution avant/après entre zone traitée et zone témoin</td>
+              <td>Hypothèse de tendances parallèles</td>
+            </tr>
+            <tr>
+              <td>Discontinuité (RDD)</td>
+              <td>Exploite un seuil d'éligibilité (âge, revenu, score)</td>
+              <td>Seuil arbitraire et non manipulable</td>
+            </tr>
+            <tr>
+              <td>Appariement (matching)</td>
+              <td>Compare des individus traités et non traités très similaires</td>
+              <td>Toutes les variables de sélection observées</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Exemple illustratif : effet estimé d'un programme de formation professionnelle sur le taux d'emploi à 12 mois, selon la méthode utilisée (données fictives, à but pédagogique) :</p>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Effet estimé sur le taux d'emploi à 12 mois (points de %, illustratif)</p>
+        <ul class="article-chart-bars">
+          <li>
+            <span class="chart-label">RCT</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 42%;"></span></span>
+            <span class="chart-value">+4,2</span>
+          </li>
+          <li>
+            <span class="chart-label">Diff-in-diff</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 58%;"></span></span>
+            <span class="chart-value">+5,8</span>
+          </li>
+          <li>
+            <span class="chart-label">RDD</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 35%;"></span></span>
+            <span class="chart-value">+3,5</span>
+          </li>
+          <li>
+            <span class="chart-label">Matching</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 71%;"></span></span>
+            <span class="chart-value">+7,1</span>
+          </li>
+        </ul>
+        <p class="article-chart-source muted">Données illustratives : l'écart entre méthodes illustre justement pourquoi le choix méthodologique n'est jamais neutre.</p>
+      </div>
+
+      <h2>Les pièges classiques</h2>
+      <p>Trois biais reviennent systématiquement. Le biais de sélection, quand les bénéficiaires diffèrent structurellement des non-bénéficiaires (les plus motivés s'inscrivent davantage aux formations). L'effet d'aubaine, quand la politique subventionne un comportement qui aurait eu lieu de toute façon. Et l'effet d'équilibre général, quand un programme réussit au niveau individuel mais déplace simplement le problème (une aide à l'embauche ciblée peut évincer d'autres candidats sans effet net sur l'emploi total).</p>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>Toujours partir de la théorie du changement avant de choisir une méthode statistique.</li>
+        <li>Le choix de la méthode dépend des données disponibles et du contexte, pas d'une hiérarchie universelle.</li>
+        <li>Se méfier des effets d'aubaine et des effets de déplacement, souvent invisibles au niveau individuel.</li>
+        <li>Une évaluation crédible documente explicitement son contrefactuel.</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>Évaluer une politique publique, ce n'est pas mesurer un avant/après brut : c'est isoler, avec la méthode la plus adaptée aux données disponibles, la part de l'évolution observée réellement attribuable à la politique. Cette rigueur méthodologique a un coût, mais elle seule permet de distinguer une politique efficace d'une politique simplement populaire.</p>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fevaluation-politiques-publiques.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fevaluation-politiques-publiques.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Sur des sujets proches :</p>
+        <ul>
+          <li><a class="text-link" href="deficit-public-et-donnees.html">Déficit public et données</a></li>
+          <li><a class="text-link" href="risque-pays-cadre-analyse.html">Évaluer le risque pays</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

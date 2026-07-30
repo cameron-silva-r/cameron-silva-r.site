@@ -657,6 +657,64 @@ h1 {
   background: #eef4fb;
 }
 
+.article-chart {
+  margin: 1.2rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.article-chart-title {
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+}
+
+.article-chart-bars {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+.article-chart-bars li {
+  display: grid;
+  grid-template-columns: 7rem 1fr 3rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.article-chart-bars .chart-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.article-chart-bars .chart-track {
+  background: #eef2f7;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 0.85rem;
+}
+
+.article-chart-bars .chart-bar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), #3869a3);
+}
+
+.article-chart-bars .chart-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.article-chart-source {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+}
+
 .article-checklist {
   margin: 1rem 0;
   padding-left: 1.15rem;

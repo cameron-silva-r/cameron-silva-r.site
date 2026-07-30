@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--
+BROUILLON - NON PUBLIE
+- Cet article n'est pas lie dans blog.html, pas dans sitemap.xml : il n'est pas visible pour un visiteur normal.
+- Balise <meta name="robots" content="noindex, nofollow"> ci-dessous : empeche Google de l'indexer meme si le fichier est en ligne.
+- Pour publier: 1) relire/completer le texte  2) enlever la balise noindex  3) ajouter une carte dans blog.html (#blog-list)
+  4) l'ajouter dans sitemap.xml  5) creer la version en/blog/... si tu veux la version anglaise.
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Notes et actualités - Avantage comparatif et modèles de gravité">
+  <title>Commerce international : avantage comparatif et modèles de gravité | Notes &amp; Actualités</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Avantage comparatif et modèles de gravité : deux façons de penser le commerce international">
+  <meta property="og:description" content="De Ricardo aux modèles de gravité modernes : comment l'économie explique la structure et le volume des échanges internationaux.">
+  <meta property="og:url" content="https://cameron-silva.fr/blog/commerce-international-avantage-comparatif.html">
+  <meta property="og:image" content="https://cameron-silva.fr/assets/img/blog-placeholder.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Avantage comparatif et modèles de gravité">
+  <meta name="twitter:description" content="De Ricardo aux modèles de gravité modernes : comment l'économie explique la structure et le volume des échanges internationaux.">
+  <link rel="canonical" href="https://cameron-silva.fr/blog/commerce-international-avantage-comparatif.html">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script defer src="../assets/js/main.js"></script>
+  <script data-goatcounter="https://site-pro-cs-r.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Avantage comparatif et modèles de gravité : deux façons de penser le commerce international",
+    "datePublished": "2026-08-19",
+    "inLanguage": "fr",
+    "url": "https://cameron-silva.fr/blog/commerce-international-avantage-comparatif.html",
+    "description": "De Ricardo aux modèles de gravité modernes : comment l'économie explique la structure et le volume des échanges internationaux.",
+    "author": { "@type": "Person", "name": "Cameron Silva" }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html">Cameron Silva</a>
+      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../cv.html">CV</a>
+        <a href="../projects.html">Projets</a>
+        <a class="active" href="../blog.html">Notes &amp; Actualités</a>
+        <a href="../contact.html">Me contacter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section article-wrap">
+    <article class="panel article-prose">
+      <div class="article-meta-row">
+        <p class="eyebrow">Notes et actualités · 19 Aoû 2026 · 7 min de lecture</p>
+        <div class="article-meta-right">
+          <div class="article-tags">
+            <span class="article-tag">international</span>
+            <span class="article-tag">commerce</span>
+            <span class="article-tag">méthodologie</span>
+          </div>
+          <details class="code-toggle">
+            <summary>Voir le code</summary>
+            <div class="code-panel">
+              <pre><code>import statsmodels.formula.api as smf
+import numpy as np
+
+# Modele de gravite simplifie (panel bilateral)
+df["log_flux"] = np.log(df["flux_commerce"])
+df["log_pib_i"] = np.log(df["pib_exportateur"])
+df["log_pib_j"] = np.log(df["pib_importateur"])
+df["log_distance"] = np.log(df["distance_km"])
+
+modele = smf.ols(
+    "log_flux ~ log_pib_i + log_pib_j + log_distance + frontiere_commune + langue_commune",
+    data=df,
+).fit(cov_type="cluster", cov_kwds={"groups": df["paire_pays"]})
+
+print(modele.summary())</code></pre>
+              <a class="btn btn-outline btn-mini" href="../assets/code/gravity-model.py" download>Télécharger le script (.py)</a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <h1>Avantage comparatif et modèles de gravité : deux façons de penser le commerce international</h1>
+      <p class="lead">Pourquoi les pays échangent-ils, et pourquoi échangent-ils davantage avec certains partenaires qu'avec d'autres ? Deux cadres théoriques, à un siècle et demi d'écart, répondent à ces deux questions différemment.</p>
+
+      <figure class="article-figure">
+        <img src="../assets/img/blog-placeholder.svg" alt="Illustration : flux de commerce international" width="1200" height="700" loading="lazy">
+        <figcaption>L'avantage comparatif explique pourquoi on échange ; le modèle de gravité explique avec qui et combien.</figcaption>
+      </figure>
+
+      <h2>Ricardo et l'avantage comparatif : l'intuition</h2>
+      <p>L'avantage comparatif de Ricardo (1817) reste la pierre angulaire de la théorie du commerce international. Son intuition contre-intuitive : un pays a intérêt à se spécialiser et à échanger même s'il est moins efficace que son partenaire dans <em>toutes</em> les productions, à condition de se concentrer sur l'activité où son désavantage relatif est le plus faible. Ce qui compte n'est pas l'avantage absolu, mais le coût d'opportunité de produire un bien plutôt qu'un autre.</p>
+      <p>Les modèles ultérieurs (Heckscher-Ohlin, puis la nouvelle théorie du commerce de Krugman) ont enrichi ce cadre en intégrant les dotations factorielles, les rendements croissants et la concurrence imparfaite, mais l'intuition ricardienne du coût d'opportunité reste centrale pour expliquer <em>pourquoi</em> le commerce est mutuellement profitable.</p>
+
+      <div class="article-callout">
+        <strong>Point clé :</strong> l'avantage comparatif explique la logique de la spécialisation ; il ne dit presque rien sur l'intensité des échanges entre deux pays donnés. C'est là qu'interviennent les modèles de gravité.
+      </div>
+
+      <section class="article-grid-2">
+        <div class="article-note">
+          <h3>Modèle ricardien</h3>
+          <p>Théorique, centré sur la spécialisation et les gains à l'échange. Répond à la question : qui devrait produire quoi ?</p>
+        </div>
+        <div class="article-note">
+          <h3>Modèle de gravité</h3>
+          <p>Empirique, centré sur la taille des économies et la distance. Répond à la question : combien de commerce entre deux pays donnés ?</p>
+        </div>
+      </section>
+
+      <blockquote class="article-quote">
+        "Le modèle de gravité est l'une des régularités empiriques les plus robustes de toute la science économique : le commerce bilatéral croît avec le PIB des deux partenaires et décroît avec la distance qui les sépare."
+      </blockquote>
+
+      <h2>Le modèle de gravité, en pratique</h2>
+      <p>Par analogie avec la loi de gravitation universelle, le modèle de gravité prédit que le commerce bilatéral est proportionnel au produit des tailles économiques des deux pays et inversement proportionnel à la distance qui les sépare. Les variantes modernes (Anderson &amp; van Wincoop, 2003) ajoutent des termes de résistance multilatérale pour tenir compte du fait qu'un pays commerce aussi <em>relativement</em> à ses autres partenaires potentiels.</p>
+
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Effet attendu sur le commerce bilatéral</th>
+              <th>Interprétation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PIB des deux pays</td>
+              <td>Positif</td>
+              <td>Taille de marché et capacité de production</td>
+            </tr>
+            <tr>
+              <td>Distance géographique</td>
+              <td>Négatif</td>
+              <td>Coûts de transport et d'information</td>
+            </tr>
+            <tr>
+              <td>Frontière commune</td>
+              <td>Positif</td>
+              <td>Intégration logistique et réseaux transfrontaliers</td>
+            </tr>
+            <tr>
+              <td>Langue commune</td>
+              <td>Positif</td>
+              <td>Coûts de transaction et de négociation réduits</td>
+            </tr>
+            <tr>
+              <td>Accord commercial</td>
+              <td>Positif</td>
+              <td>Réduction des barrières tarifaires et non tarifaires</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Illustration d'un effet de distance typique sur des paires de pays fictives (élasticité illustrative, pas une estimation réelle) :</p>
+
+      <div class="article-chart">
+        <p class="article-chart-title">Volume de commerce bilatéral selon la distance (illustratif, base 100 à 500 km)</p>
+        <ul class="article-chart-bars">
+          <li>
+            <span class="chart-label">500 km</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 100%;"></span></span>
+            <span class="chart-value">100</span>
+          </li>
+          <li>
+            <span class="chart-label">1 500 km</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 62%;"></span></span>
+            <span class="chart-value">62</span>
+          </li>
+          <li>
+            <span class="chart-label">4 000 km</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 34%;"></span></span>
+            <span class="chart-value">34</span>
+          </li>
+          <li>
+            <span class="chart-label">9 000 km</span>
+            <span class="chart-track"><span class="chart-bar" style="width: 18%;"></span></span>
+            <span class="chart-value">18</span>
+          </li>
+        </ul>
+        <p class="article-chart-source muted">Données illustratives destinées à représenter la décroissance typique du commerce avec la distance.</p>
+      </div>
+
+      <h2>Limites et prolongements</h2>
+      <p>Le modèle de gravité explique bien la structure moyenne du commerce, mais reste silencieux sur les chocs : une crise géopolitique, une sanction commerciale ou une rupture de chaîne d'approvisionnement peuvent faire dévier fortement les flux observés de leur valeur « gravitationnelle » attendue. C'est précisément l'angle que j'ai exploré dans mon mémoire de M2 sur le développement financier et les chocs géopolitiques : le modèle de gravité sert alors de référence pour isoler l'ampleur d'un choc, plutôt que comme prédiction en soi.</p>
+
+      <h2>Points à retenir</h2>
+      <ul class="article-checklist">
+        <li>L'avantage comparatif explique pourquoi le commerce est mutuellement profitable, pas son intensité.</li>
+        <li>Le modèle de gravité relie le commerce bilatéral à la taille économique et à la distance entre pays.</li>
+        <li>La résistance multilatérale rappelle qu'un flux bilatéral dépend aussi des autres partenaires disponibles.</li>
+        <li>Les écarts au modèle de gravité sont souvent plus informatifs que le modèle lui-même (chocs, sanctions, accords).</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>Avantage comparatif et modèle de gravité ne sont pas concurrents mais complémentaires : le premier explique la logique de la spécialisation internationale, le second en mesure l'intensité observée. Comprendre les deux permet de lire un choc commercial ou géopolitique non comme une anomalie, mais comme un écart mesurable à une structure de référence.</p>
+
+      <p><a class="text-link" href="../blog.html">Retour aux notes</a></p>
+
+      <div class="article-share" aria-label="Partager cette note">
+        <span class="muted">Partager :</span>
+        <a class="text-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fcommerce-international-avantage-comparatif.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="text-link" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcameron-silva.fr%2Fblog%2Fcommerce-international-avantage-comparatif.html" target="_blank" rel="noopener noreferrer">X</a>
+      </div>
+
+      <nav class="article-related" aria-label="Notes liées">
+        <p class="muted">Sur des sujets proches :</p>
+        <ul>
+          <li><a class="text-link" href="risque-pays-cadre-analyse.html">Évaluer le risque pays</a></li>
+          <li><a class="text-link" href="../projects.html">Voir mes projets académiques</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 - Cameron Silva</p>
+      <p><a href="../contact.html">Me contacter</a></p>
+    </div>
+  </footer>
+</body>
+</html>

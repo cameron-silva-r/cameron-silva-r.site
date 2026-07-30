@@ -21,10 +21,6 @@
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://cameron-silva.fr/blog/deficit-public-et-donnees.html</loc>
-    <lastmod>2026-07-18</lastmod>
-  </url>
-  <url>
     <loc>https://cameron-silva.fr/en/index.html</loc>
     <changefreq>monthly</changefreq>
   </url>
@@ -43,9 +39,5 @@
   <url>
     <loc>https://cameron-silva.fr/en/contact.html</loc>
     <changefreq>yearly</changefreq>
-  </url>
-  <url>
-    <loc>https://cameron-silva.fr/en/blog/public-deficit-and-data.html</loc>
-    <lastmod>2026-07-18</lastmod>
   </url>
 </urlset>

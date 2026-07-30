@@ -54,5 +54,37 @@ git push
 
 ## 6) Verifier en ligne
 
-- Ouvre `https://cameron-silva-r.github.io/cameron-silva-r.site/blog.html`
+- Ouvre `https://cameron-silva.fr/blog.html`
 - Fais `Ctrl+F5` si la nouvelle version n'apparait pas
+
+## 7) Version anglaise (en/blog/)
+
+Chaque note doit avoir un miroir anglais pour que le site reste bilingue:
+
+1. Duplique ton fichier FR fini et place-le dans `en/blog/nom-en-anglais.html`
+   (le nom de fichier peut differer du FR, ex: `deficit-public-et-donnees.html` ->
+   `public-deficit-and-data.html`).
+2. Traduis le contenu (title, meta description, eyebrow, h1, lead, paragraphes).
+3. Verifie les 2 liens `.lang-switch` (FR -> EN et EN -> FR) pointent bien l'un vers
+   l'autre avec le bon chemin relatif.
+4. Ajoute une carte dans `en/blog.html` (`#blog-list`), memes champs data-date/data-keywords
+   qu'en FR mais avec des mots-cles en anglais (`publicpolicy` au lieu de `politiquespubliques`).
+
+## 8) Mettre a jour la page d'accueil
+
+Dans `index.html` (et `en/index.html`), la section "Dernieres notes" (`.overview-list`) est une
+liste statique des 3 notes les plus recentes. Ajoute/retire un `<li><a class="text-link"
+href="blog/...">Titre</a></li>` pour que la home reste a jour, dans les 2 langues.
+
+## 9) Bonnes pratiques SEO / partage deja en place a reprendre
+
+Chaque page du site a deja: un favicon (`<link rel="icon" ... href=".../assets/img/favicon.svg">`),
+des balises Open Graph/Twitter Card, et les articles ont un lien `rel="alternate"` vers le flux RSS
+(`rss-fr.xml` / `rss-en.xml`). Pour une nouvelle note, copie ces balises depuis un article existant
+(`blog/deficit-public-et-donnees.html` par exemple) et adapte titre/description/url/date.
+
+Pense aussi a:
+- Ajouter un temps de lecture estime dans l'eyebrow (`· 3 min de lecture`).
+- Ajouter un lien "note precedente / suivante" (`.article-pager`) en bas de chaque article, et
+  mettre a jour ceux des notes voisines en consequence.
+- Ajouter la nouvelle note dans `sitemap.xml` et dans `rss-fr.xml`/`rss-en.xml`.
